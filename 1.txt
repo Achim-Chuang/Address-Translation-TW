@@ -1,0 +1,59 @@
+Sub Marker()
+
+Sheets("TANDEM user list").Select
+
+LastRec = Sheets("TANDEM user list").Range("A1").CurrentRegion.Rows.Count
+
+Dim data_n As Integer
+
+
+For i = 2 To LastRec
+
+Unit = Cells(i, 8).Value
+Empy = Cells(i, 9).Value
+Cate = Cells(i, 10).Value
+Segt = Cells(i, 11).Value
+
+UserID = Cells(i, 2)
+
+Dim Rule_Table() As Variant
+
+If Unit = "001" Then
+            Rule_N = 14
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n
+            
+End If
+
+Next i
+
+
+
+End Sub
