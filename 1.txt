@@ -48,8 +48,973 @@ If Unit = "001" Then
             Sheets("Output").Cells(data_n + 1, 4) = ScreeN
             Sheets("Output").Cells(data_n + 1, 5) = Remark
             
-            Next n
+            Next n            
+End If
+
+If Unit = "001" and (Empy="05" or Empy="82") and Cate="主管碼" Then
+            Rule_N = 1
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
             
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and (Empy="08" or Empy="78") and Cate="櫃員碼" Then
+            Rule_N = 2
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and (Empy="08" or Empy="87") and Cate="櫃員碼" Then
+            Rule_N = 3
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and (Empy="13") and Cate="櫃員碼" Then
+            Rule_N = 4
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and (Empy="16") and Cate="櫃員碼" Then
+            Rule_N = 5
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and (Empy="29") and Cate="櫃員碼" Then
+            Rule_N = 6
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and (Empy="14") and Cate="櫃員碼" Then
+            Rule_N = 7
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and (Empy="35") and Cate="櫃員碼" Then
+            Rule_N = 8
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and (Empy="43") and Cate="櫃員碼" Then
+            Rule_N = 9
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and (Empy="45") and Cate="櫃員碼" Then
+            Rule_N = 10
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and (Empy="59") and Cate="櫃員碼" Then
+            Rule_N = 11
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and (Empy="62" or Empy="95") and Cate="櫃員碼" Then
+            Rule_N = 12
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and (Empy="72" or Empy="18") and Cate="主管碼" Then
+            Rule_N = 13
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "080" or Unit ="090" Then
+            Rule_N = 15
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and (Empy<>"00") Then
+            Rule_N = 16
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and Cate="主管碼" Then
+            Select Case Empy
+            Case 21,22,23,24,25,26,27,28,29,33,35,36,37,38,39,40,41,77,78,79,81,62,63,64,65,66,91,87,68,60,69,94,98,73,59,53
+            Rule_N = 17
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n   
+            End Select
+End If
+
+If Unit = "001" and Cate="櫃員碼" Then
+            Rule_N = 18
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and (Empy<>"00" and Empy<>"99") and Cate="櫃員碼" Then
+            Rule_N = 19
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and (Empy="59" or Empy="73" or Empy="29" or Empy="02") and Cate="櫃員碼" Then
+            Rule_N = 20
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and (Empy="59" or Empy="73" or Empy = "29" or Empy ="13") and Cate="櫃員碼" Then
+            Rule_N = 21
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and (Empy="79" or Empy="82" or Empy="83") and Cate="櫃員碼" Then
+            Rule_N = 22
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and Cate="櫃員碼" Then
+            Select Case Empy
+            Case 93,94,95,79,80,81,82,83,84,85,61,62,51
+            Rule_N = 23
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n   
+            End Select
+End If
+
+If Unit = "003" Then
+            Rule_N = 24
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "003" and and Cate="櫃員碼" Segt="LN" Then
+            Rule_N = 25
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "003" and and Cate="櫃員碼" Segt="SS" Then
+            Rule_N = 26
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+If Unit = "001" and Empy="59" and Cate="櫃員碼" Then
+            Rule_N = 27
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+
+If Unit = "080" and Empy<>"00" and Cate="櫃員碼" Then
+            Rule_N = 28
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+
+If Unit = "098"  Then
+            Rule_N = 29
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
+End If
+
+
+If Unit = "118" and Empy="10" and Cate="櫃員碼" Then
+            Rule_N = 30
+            Scene_N = Sheets("Consolidate").Cells(Rule_N, 1).CurrentRegion.Columns.Count
+            ReDim Rule_Table(Scene_N - 2)
+            For l = 1 To Scene_N - 2
+                        
+            Rule_Table(l) = Sheets("Consolidate").Cells(Rule_N, l + 2)
+            
+          
+            Next l
+         
+            
+            Dim element As Variant
+                        
+            For n = 1 To UBound(Rule_Table)
+            element = Rule_Table(n)
+            
+            data_n = Sheets("Output").Range("A1").CurrentRegion.Rows.Count
+            System = Sheets("Condition").Cells(element + 1, 2)
+            Func_N = Sheets("Condition").Cells(element + 1, 3)
+            ScreeN = Sheets("Condition").Cells(element + 1, 4)
+            Remark = Sheets("Condition").Cells(element + 1, 5)
+            
+            
+            Sheets("Output").Cells(data_n + 1, 1) = UserID
+            Sheets("Output").Cells(data_n + 1, 2) = System
+            Sheets("Output").Cells(data_n + 1, 3) = Func_N
+            Sheets("Output").Cells(data_n + 1, 4) = ScreeN
+            Sheets("Output").Cells(data_n + 1, 5) = Remark
+            
+            Next n            
 End If
 
 Next i
