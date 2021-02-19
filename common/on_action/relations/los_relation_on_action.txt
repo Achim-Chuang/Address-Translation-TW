@@ -1,0 +1,25 @@
+#On actions governing Secret lover random events
+
+#Fired from the a quarterly pulse once a year
+secret_lover_quarterly_pulse = {
+	trigger = {
+		scope:quarter = 1
+	}
+	on_actions = {
+		secret_lover_miss_you
+	}
+}
+
+#Secret lover miss you
+secret_lover_miss_you = {
+	trigger = {
+		num_of_relation_secret_lover > 0
+		is_available_adult = yes
+	}
+	random_events = {
+		chance_to_happen = 20
+		100 = 0
+		100 = los_lover.01 #Your secret lover miss you
+	}
+}
+

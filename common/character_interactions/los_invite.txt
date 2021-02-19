@@ -1,0 +1,71 @@
+﻿los_invited_interaction = {
+	common_interaction = yes
+	category = interaction_category_friendly
+	desc = los_invited_interaction_desc
+	use_diplomatic_range = yes
+	ignores_pending_interaction_block = yes
+	auto_accept = yes
+	interface_priority = 200
+	cooldown = { days = 7 }
+	cooldown_against_recipient = { months = 1 }
+	is_highlighted = { always = yes }
+	ai_will_do = 0
+	
+	is_shown = {		
+		scope:recipient = { 
+			is_female = no
+			NOT = { this = scope:actor }
+		}
+		scope:actor = { 
+			is_female = no 
+			is_ai = no
+			has_character_flag = LOS_START
+		}
+	}
+	
+	is_valid_showing_failures_only = {
+		scope:actor = { 
+			gold >= 10
+			is_commanding_army = no
+			is_imprisoned = no
+			NOT = { has_trait = incapable }
+		}
+		scope:recipient = { 
+			is_adult = yes
+			is_commanding_army = no
+			is_imprisoned = no
+			NOT = { has_relation_rival = scope:actor }
+		}
+	}
+	
+	on_accept = {		
+		scope:actor = {	
+			custom_tooltip = los_invite_to_your_city
+			send_interface_message = {
+				type = event_chancellor_task_good
+				title = los_invited_accept_01
+				desc = los_time_tip_party_01
+				right_icon = scope:recipient
+				
+				scope:recipient = {					
+					add_opinion = {
+						target = scope:actor
+						modifier = opinion_be_invited
+					}
+				}
+			}
+			trigger_event = losl.01
+		}
+	}
+	
+	on_auto_accept = {
+		scope:recipient = {
+			trigger_event = losp.03
+			trigger_event = losp.04			
+		}
+	}
+	
+	cost = {
+		gold = { 10 }
+	}
+}

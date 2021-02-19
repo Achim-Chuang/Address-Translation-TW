@@ -1,0 +1,2475 @@
+﻿namespace = losp
+
+scripted_trigger losp_01_trigger = {
+		is_alive = yes
+		is_imprisoned = no
+		is_female = yes
+		is_totally_healthy = yes
+		age >= 20
+		is_pregnant = no
+		is_commanding_army = no
+}
+
+#welcome
+losp.01 = {
+	type = character_event
+	title = losp.01.t
+	theme = friendly	
+	desc = losp.01.desc
+	
+	override_background = {
+        event_background = corridor_day
+    }
+
+	left_portrait = {
+		character = scope:actor
+		animation = happiness
+	}
+	right_portrait = {
+		character = scope:recipient
+		animation = happiness
+	}
+	
+	immediate = {	
+		trigger_event = losc.02
+		scope:actor = {			
+			add_character_flag = los_exhausted
+			days = 1
+		}
+	}
+	
+	option = {
+		name = losp.01.a
+		trigger_event = losp.02
+	}
+}
+	
+#dinner
+losp.02 = {
+	type = character_event
+	title = losp.02.t
+	theme = party	
+	desc = {
+		desc = losp.02.desc.01
+		triggered_desc = {
+			desc = losp.02.spouse
+			trigger = { 
+				scope:recipient = {
+					has_character_flag = has_approximate_spouse
+				}
+			}
+		}
+		triggered_desc = {
+			desc = losp.02.daughter
+			trigger = { 
+				scope:recipient = {
+					has_character_flag = has_approximate_daughter
+				}
+			}
+		}
+		desc = losp.02.desc.02
+	}
+	
+	left_portrait = {
+		character = scope:actor
+		animation = happiness
+	}
+	right_portrait = {
+		character = scope:recipient
+		animation = happiness
+	}
+	
+	
+	immediate = {	
+		#play_music_cue = "mx_cue_banquet"
+	}
+	
+	option = {
+		name = losp.02.a
+		trigger = {
+			scope:recipient = {
+				has_character_flag = has_approximate_spouse
+			}
+		}
+		trigger_event = losp.10
+	}
+	option = {
+		name = losp.02.b
+		trigger = {
+			scope:recipient = {
+				has_character_flag = has_approximate_daughter
+			}
+		}
+		trigger_event = losp.11
+	}
+	option = {
+		name = losp.02.c
+		trigger_event = losp.12
+	}
+}
+
+losp.03 = {
+	hidden = yes
+	
+	trigger = {
+		any_consort = {
+			losp_01_trigger = yes
+			age <= 40
+			NOT = { is_child_of = scope:actor }
+		}
+	}
+	
+	immediate = {
+		add_character_flag = has_approximate_spouse
+	}
+}	
+
+losp.04 = {
+	hidden = yes
+
+	trigger = {
+		any_child = {
+			losp_01_trigger = yes
+			age <= 30
+			NOT = { is_consort_of = scope:actor }
+		}
+	}
+		
+	immediate = {
+		add_character_flag = has_approximate_daughter
+	}
+}
+
+losp.05 = {
+	hidden = yes
+	
+	immediate = {
+		set_variable = {
+			name = rest_cuming_times
+			value = root.var:los_cuming_times_total
+			days = 1
+		}
+	}
+}
+
+#spouse or drink
+losp.10 = {
+	type = character_event
+	title = losp.10.t
+	theme = party	
+	desc = losp.10.desc
+
+	left_portrait = {
+		character = scope:actor
+		animation = happiness
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = happiness
+	}
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		
+		scope:recipient = {
+			random_consort = {
+				limit = {
+					losp_01_trigger = yes
+					age <= 40
+					NOT = { is_child_of = scope:actor }
+				}
+				save_scope_as = losp_sexpartner_1	
+			}
+			remove_character_flag = has_approximate_spouse		
+		}
+	}
+	
+	option = { #your lover never refuse you
+		trigger = {
+			scope:losp_sexpartner_1 = {
+				has_relation_lover = scope:actor
+			}
+		}
+		name = losp.10.c
+		custom_tooltip = LOS_NEVER_REFUSE
+		trigger_event = losp.20
+	}
+	
+	option = { #sedece
+		trigger = {
+			NOT = {
+				scope:losp_sexpartner_1 = {
+					has_relation_lover = scope:actor
+				}
+			}
+		}		
+		name = losp.10.a
+		random_list = {			
+			80 = { 
+				desc = LOSP_ACCEPT_SEDUCTION
+				show_chance = no
+				custom_tooltip = LOSP_ACCEPT_SEDUCTION.a
+				trigger_event = losp.20
+			}
+			20 = { 
+				desc = LOSP_REFUSE_SEDUCTION
+				show_chance = no
+				custom_tooltip = LOSP_REFUSE_SEDUCTION.a
+				trigger_event = losp.13
+			}
+		}
+	}
+	
+	option = { #go back to drink
+		name = losp.10.b
+		trigger_event = losp.12
+	}
+}
+
+
+#daughter or drink
+losp.11 = {
+	type = character_event
+	title = losp.11.t
+	theme = party	
+	desc = losp.11.desc
+
+	left_portrait = {
+		character = scope:actor
+		animation = happiness
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = happiness
+	}
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		
+		scope:recipient = {
+			random_child = {
+				limit = {
+					losp_01_trigger = yes
+					age <= 30
+					NOT = { is_consort_of = scope:actor }
+				}
+				save_scope_as = losp_sexpartner_1
+			}
+			remove_character_flag = has_approximate_daughter
+		}
+	}
+	
+	option = { #your lover never refuse you
+		trigger = {
+			scope:losp_sexpartner_1 = {
+				has_relation_lover = scope:actor
+			}
+		}
+		name = losp.11.c
+		custom_tooltip = LOS_NEVER_REFUSE
+		trigger_event = losp.20
+	}
+	
+	option = { #sedece
+		trigger = {
+			NOT = {
+				scope:losp_sexpartner_1 = {
+					has_relation_lover = scope:actor
+				}
+			}
+		}	
+		name = losp.11.a
+		random_list = {
+			80 = { 
+				show_chance = no
+				desc = LOSP_ACCEPT_SEDUCTION
+				custom_tooltip = LOSP_ACCEPT_SEDUCTION.a
+				trigger_event = losp.20
+			}
+			20 = { 
+				show_chance = no
+				desc = LOSP_REFUSE_SEDUCTION
+				custom_tooltip = LOSP_REFUSE_SEDUCTION.a
+				trigger_event = losp.13
+			}
+		}
+	}
+	
+	option = { #go back to drink
+		name = losp.11.b
+		trigger_event = losp.12
+	}
+}
+
+#drink
+losp.12 = {
+	type = character_event
+	title = losp.12.t
+	theme = party	
+	desc = losp.12.desc	
+	
+	left_portrait = {
+		character = scope:actor
+		animation = ecstasy
+	}
+	right_portrait = {
+		character = scope:recipient
+		animation = ecstasy
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_banquet"
+	}
+	
+	option = {
+		name = losp.12.a
+		trigger_event = { id = losp.90 days = 1 }
+	}
+}
+
+#be refused
+losp.13 = {
+	type = character_event
+	title = losp.13.t
+	theme = party	
+	desc = losp.13.desc
+	
+	left_portrait = {
+		character = scope:actor
+		animation = sadness
+	}
+	
+	
+	immediate = {
+		play_music_cue = "mx_cue_negative"		
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_very_angry
+			}
+		}
+		scope:actor = {
+			add_stress = minor_stress_gain 
+		}
+	}
+	
+	option = {
+		name = losp.13.a
+		trigger_event = losp.12
+	}
+}
+
+#choose scence
+losp.20 = {
+	type = character_event
+	title = losp.20.t
+	theme = party	
+	desc = losp.20.desc	
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:actor = {
+			trigger_event = losp.05
+		}
+	}
+	
+	option = {
+		name = losp.20.a
+		trigger_event = losp.30
+	}
+	
+	option = {
+		name = losp.20.b
+		trigger_event = losp.50
+	}
+	
+	option = {
+		name = losp.20.c
+		trigger_event = losp.70
+	}
+}
+
+#bedroom
+losp.30 = { 
+	type = character_event
+	title = losp.30.t
+	theme = lover_relation	
+	desc = losp.30.desc	
+	
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = losp.30.a
+		trigger_event = losp.31
+		custom_tooltip = LOSP_BLOW_JOB
+	}
+	
+	option = {
+		name = losp.30.b
+		trigger_event = losp.34
+	}
+	
+	option = {
+		name = losp.30.c
+		trigger_event = losp.37
+	}
+}
+
+#bj
+losp.31 = {
+	type = character_event
+	title = losp.31.t
+	theme = lover_relation	
+	desc = losp.31.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = losp.31.a
+		trigger_event = losp.32
+		show_as_tooltip = {
+			scope:losp_sexpartner_1 = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_unsatisfied
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = losp.31.b
+		trigger_event = losp.33
+		show_as_tooltip = {
+			scope:losp_sexpartner_1 = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_unsatisfied
+				}
+			}
+		}
+	}
+}
+
+#cum in
+losp.32 = {
+	type = character_event
+	title = losp.32.t
+	theme = lover_relation	
+	desc = losp.32.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_unsatisfied
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = losp.32.a
+		trigger_event = losp.31
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.32.b
+		trigger_event = losp.34
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.32.c
+		trigger_event = losp.37
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.32.d
+		trigger_event = losp.40
+	}
+}
+
+#pull out
+losp.33 = {
+	type = character_event
+	title = losp.33.t
+	theme = lover_relation	
+	desc = losp.33.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_unsatisfied
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = losp.33.a
+		trigger_event = losp.31
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.33.b
+		trigger_event = losp.34
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.33.c
+		trigger_event = losp.37
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.33.d
+		trigger_event = losp.40
+	}
+}
+
+#pussy
+losp.34 = {
+	type = character_event
+	title = losp.34.t
+	theme = lover_relation	
+	desc = losp.34.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = losp.34.a
+		trigger_event = losp.35
+		show_as_tooltip = {
+			scope:losp_sexpartner_1 = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss 
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 50
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = losp.34.b
+		trigger_event = losp.36	
+		show_as_tooltip = {
+			scope:losp_sexpartner_1 = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss 
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 20
+				}
+			}
+		}
+	}
+}
+
+#cum in
+losp.35 = {
+	type = character_event
+	title = losp.35.t
+	theme = lover_relation	
+	desc = losp.35.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss 
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 50
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = losp.35.a
+		trigger_event = losp.34
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.35.b
+		trigger_event = losp.31
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.35.c
+		trigger_event = losp.37
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.35.d
+		trigger_event = losp.40
+	}
+}
+
+#pull out
+losp.36 = {
+	type = character_event
+	title = losp.36.t
+	theme = lover_relation	
+	desc = losp.36.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 20
+			}			
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = losp.36.a
+		trigger_event = losp.34
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.36.b
+		trigger_event = losp.31
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.36.c
+		trigger_event = losp.37
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.36.d
+		trigger_event = losp.40
+	}
+}
+
+#anal
+losp.37 = {
+	type = character_event
+	title = losp.37.t
+	theme = lover_relation	
+	desc = losp.37.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = losp.37.a
+		trigger_event = losp.38
+		show_as_tooltip = {
+			scope:losp_sexpartner_1 = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+	
+	option = {
+		name = losp.37.b
+		trigger_event = losp.39
+		show_as_tooltip = {
+			scope:losp_sexpartner_1 = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+}
+
+#cum in
+losp.38 = {
+	type = character_event
+	title = losp.38.t
+	theme = lover_relation	
+	desc = losp.38.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = losp.38.a
+		trigger_event = losp.37
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.38.b
+		trigger_event = losp.31
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.38.c
+		trigger_event = losp.34
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.38.d
+		trigger_event = losp.40
+	}
+}
+
+#pull out
+losp.39 = {
+	type = character_event
+	title = losp.39.t
+	theme = lover_relation	
+	desc = losp.39.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = losp.39.a
+		trigger_event = losp.37
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.39.b
+		trigger_event = losp.31
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.39.c
+		trigger_event = losp.34
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.39.d
+		trigger_event = losp.40
+	}
+}
+
+#over
+losp.40 = {
+	type = character_event
+	title = losp.40.t
+	theme = lover_relation	
+	desc = losp.40.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		#remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = love
+		#remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"		
+	}
+	
+	option = {
+		name = losp.40.a
+		custom_tooltip = LOSP_HAVE_A_GOOD_NIGHT
+		if = {
+			limit = {
+				NOT = {
+					scope:losp_sexpartner_1 = {
+						has_relation_lover = scope:actor
+					}
+					scope:losp_sexpartner_1 = {
+						has_relation_soulmate = scope:actor
+					}
+				}
+			}
+			send_interface_message = {
+				type = event_spouse_task_good
+				title = los_gain_heart_t
+				desc = los_gain_heart_desc
+				right_icon = scope:losp_sexpartner_1
+				scope:losp_sexpartner_1 = {
+					set_relation_lover = scope:actor
+				}
+			}
+		}
+		trigger_event = { id = losp.91 days = 1 }
+	}
+}
+
+#garden
+losp.50 = {  
+	type = character_event
+	title = losp.50.t
+	theme = love	
+	desc = losp.50.desc	
+	
+	override_background = {
+		event_background = garden_night
+	}
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = losp.30.a
+		trigger_event = losp.51
+		custom_tooltip = LOSP_BLOW_JOB
+	}
+	
+	option = {
+		name = losp.30.b
+		trigger_event = losp.54
+	}
+	
+	option = {
+		name = losp.30.c
+		trigger_event = losp.57
+	}
+}
+
+#bj
+losp.51 = {
+type = character_event
+	title = losp.31.t
+	theme = love	
+	desc = losp.51.desc	
+	
+	override_background = {
+		event_background = garden_night
+	}
+		
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = losp.31.a
+		trigger_event = losp.52
+		show_as_tooltip = {
+			scope:losp_sexpartner_1 = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_unsatisfied
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = losp.31.b
+		trigger_event = losp.53
+		show_as_tooltip = {
+			scope:losp_sexpartner_1 = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_unsatisfied
+				}
+			}
+		}
+	}
+}
+
+#cum in
+losp.52 = {
+	type = character_event
+	title = losp.32.t
+	theme = love	
+	desc = losp.52.desc	
+	
+	override_background = {
+		event_background = garden_night
+	}
+		
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_unsatisfied
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = losp.32.a
+		trigger_event = losp.51
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.32.b
+		trigger_event = losp.54
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.32.c
+		trigger_event = losp.57
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.32.d
+		trigger_event = losp.60
+	}
+}
+
+#pull out
+losp.53 = {
+	type = character_event
+	title = losp.33.t
+	theme = love	
+	desc = losp.53.desc	
+	
+	override_background = {
+		event_background = garden_night
+	}
+		
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_unsatisfied
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = losp.33.a
+		trigger_event = losp.51
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.33.b
+		trigger_event = losp.54
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.33.c
+		trigger_event = losp.57
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.33.d
+		trigger_event = losp.60
+	}
+}
+
+#pussy
+losp.54 = {
+	type = character_event
+	title = losp.34.t
+	theme = love	
+	desc = losp.54.desc	
+	
+	override_background = {
+		event_background = garden_night
+	}
+		
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = losp.34.a
+		trigger_event = losp.55
+		show_as_tooltip = {
+			scope:losp_sexpartner_1 = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 50
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = losp.34.b
+		trigger_event = losp.56	
+		show_as_tooltip = {
+			scope:losp_sexpartner_1 = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 20
+				}
+			}
+		}
+	}
+}
+
+#cum in
+losp.55 = {
+	type = character_event
+	title = losp.35.t
+	theme = love	
+	desc = losp.55.desc	
+	
+	override_background = {
+		event_background = garden_night
+	}
+		
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 50
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = losp.35.a
+		trigger_event = losp.54
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.35.b
+		trigger_event = losp.51
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.35.c
+		trigger_event = losp.57
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.35.d
+		trigger_event = losp.60
+	}
+}
+
+#pull out
+losp.56 = {
+	type = character_event
+	title = losp.36.t
+	theme = love	
+	desc = losp.56.desc	
+	
+	override_background = {
+		event_background = garden_night
+	}
+		
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 20
+			}			
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = losp.36.a
+		trigger_event = losp.54
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.36.b
+		trigger_event = losp.51
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.36.c
+		trigger_event = losp.57
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.36.d
+		trigger_event = losp.60
+	}
+}
+
+#anal
+losp.57 = {
+	type = character_event
+	title = losp.37.t
+	theme = love	
+	desc = losp.57.desc	
+	
+	override_background = {
+		event_background = garden_night
+	}
+		
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = losp.37.a
+		trigger_event = losp.58	
+		show_as_tooltip = {
+			scope:losp_sexpartner_1 = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+	
+	option = {
+		name = losp.37.b
+		trigger_event = losp.59
+		show_as_tooltip = {
+			scope:losp_sexpartner_1 = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+}
+
+#cum in
+losp.58 = {
+	type = character_event
+	title = losp.38.t
+	theme = love	
+	desc = losp.58.desc	
+	
+	override_background = {
+		event_background = garden_night
+	}
+		
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = losp.38.a
+		trigger_event = losp.57
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.38.b
+		trigger_event = losp.51
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.38.c
+		trigger_event = losp.54
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.38.d
+		trigger_event = losp.60
+	}
+}
+
+#pull out
+losp.59 = {
+	type = character_event
+	title = losp.39.t
+	theme = love	
+	desc = losp.59.desc	
+	
+	override_background = {
+		event_background = garden_night
+	}
+		
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = losp.39.a
+		trigger_event = losp.57
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.39.b
+		trigger_event = losp.51
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.39.c
+		trigger_event = losp.54
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.39.d
+		trigger_event = losp.60
+	}
+}
+
+#over
+losp.60 = {
+	type = character_event
+	title = losp.40.t
+	theme = love
+	desc = losp.60.desc	
+	
+	override_background = {
+		event_background = garden_night
+	}
+		
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		#remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = love
+		#remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = losp.40.a
+		custom_tooltip = LOSP_HAVE_A_GOOD_NIGHT
+		if = {
+			limit = {
+				NOT = {
+					scope:losp_sexpartner_1 = {
+						has_relation_lover = scope:actor
+					}
+					scope:losp_sexpartner_1 = {
+						has_relation_soulmate = scope:actor
+					}
+				}
+			}
+			send_interface_message = {
+				type = event_spouse_task_good
+				title = los_gain_heart_t
+				desc = los_gain_heart_desc
+				right_icon = scope:losp_sexpartner_1
+				scope:losp_sexpartner_1 = {
+					set_relation_lover = scope:actor
+				}
+			}
+		}
+		trigger_event = { id = losp.91 days = 1 }
+	}
+}
+
+#the room near his
+losp.70 = {  
+	type = character_event
+	title = losp.30.t
+	theme = lover_relation	
+	desc = losp.70.desc	
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = losp.30.a
+		trigger_event = losp.71
+		custom_tooltip = LOSP_BLOW_JOB
+	}
+	
+	option = {
+		name = losp.30.b
+		trigger_event = losp.74
+	}
+	
+	option = {
+		name = losp.30.c
+		trigger_event = losp.77
+	}
+}
+
+#bj
+losp.71 = {
+	type = character_event
+	title = losp.31.t
+	theme = lover_relation	
+	desc = losp.71.desc	
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = losp.31.a
+		trigger_event = losp.72
+		show_as_tooltip = {
+			scope:losp_sexpartner_1 = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_unsatisfied
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = losp.31.b
+		trigger_event = losp.73
+		show_as_tooltip = {
+			scope:losp_sexpartner_1 = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_unsatisfied
+				}
+			}
+		}
+	}
+}
+
+#cum in
+losp.72 = {
+	type = character_event
+	title = losp.32.t
+	theme = lover_relation	
+	desc = losp.72.desc	
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_unsatisfied
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = losp.32.a
+		trigger_event = losp.71
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.32.b
+		trigger_event = losp.74
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.32.c
+		trigger_event = losp.77
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.32.d
+		trigger_event = losp.80
+	}
+}
+
+#pull out
+losp.73 = {
+	type = character_event
+	title = losp.33.t
+	theme = lover_relation	
+	desc = losp.73.desc	
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_unsatisfied
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = losp.33.a
+		trigger_event = losp.71
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.33.b
+		trigger_event = losp.74
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.33.c
+		trigger_event = losp.77
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.33.d
+		trigger_event = losp.80
+	}
+}
+
+#pussy
+losp.74 = {
+	type = character_event
+	title = losp.34.t
+	theme = lover_relation	
+	desc = losp.74.desc	
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = losp.34.a
+		trigger_event = losp.75
+		show_as_tooltip = {
+			scope:losp_sexpartner_1 = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 50
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = losp.34.b
+		trigger_event = losp.76		
+		show_as_tooltip = {
+			scope:losp_sexpartner_1 = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 20
+				}
+			}
+		}
+	}
+}
+
+#cum in
+losp.75 = {
+	type = character_event
+	title = losp.35.t
+	theme = lover_relation	
+	desc = losp.75.desc	
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 50
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = losp.35.a
+		trigger_event = losp.74
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.35.b
+		trigger_event = losp.71
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.35.c
+		trigger_event = losp.77
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.35.d
+		trigger_event = losp.80
+	}
+}
+
+#pull out
+losp.76 = {
+	type = character_event
+	title = losp.36.t
+	theme = lover_relation	
+	desc = losp.76.desc	
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 20
+			}			
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = losp.36.a
+		trigger_event = losp.74
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.36.b
+		trigger_event = losp.71
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.36.c
+		trigger_event = losp.77
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.36.d
+		trigger_event = losp.80
+	}
+}
+
+#anal
+losp.77 = {
+	type = character_event
+	title = losp.37.t
+	theme = lover_relation	
+	desc = losp.77.desc	
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = losp.37.a
+		trigger_event = losp.78
+		show_as_tooltip = {
+			scope:losp_sexpartner_1 = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+	
+	option = {
+		name = losp.37.b
+		trigger_event = losp.79
+		show_as_tooltip = {
+			scope:losp_sexpartner_1 = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+}
+
+#cum in
+losp.78 = {
+	type = character_event
+	title = losp.38.t
+	theme = lover_relation	
+	desc = losp.78.desc	
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = losp.38.a
+		trigger_event = losp.77
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.38.b
+		trigger_event = losp.71
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.38.c
+		trigger_event = losp.74
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.38.d
+		trigger_event = losp.80
+	}
+}
+
+#pull out
+losp.79 = {
+	type = character_event
+	title = losp.39.t
+	theme = lover_relation	
+	desc = losp.79.desc	
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:losp_sexpartner_1 = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = losp.39.a
+		trigger_event = losp.77
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.39.b
+		trigger_event = losp.71
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.39.c
+		trigger_event = losp.74
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = losp.39.d
+		trigger_event = losp.80
+	}
+}
+
+#over
+losp.80 = {
+	type = character_event
+	title = losp.40.t
+	theme = lover_relation	
+	desc = losp.80.desc	
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		#remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:losp_sexpartner_1
+		animation = love
+		#remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = losp.40.a
+		custom_tooltip = LOSP_HAVE_A_GOOD_NIGHT
+		if = {
+			limit = {
+				NOT = {
+					scope:losp_sexpartner_1 = {
+						has_relation_lover = scope:actor
+					}
+					scope:losp_sexpartner_1 = {
+						has_relation_soulmate = scope:actor
+					}
+				}
+			}
+			send_interface_message = {
+				type = event_spouse_task_good
+				title = los_gain_heart_t
+				desc = los_gain_heart_desc
+				right_icon = scope:losp_sexpartner_1
+				scope:losp_sexpartner_1 = {
+					set_relation_lover = scope:actor
+				}
+			}
+		}
+		trigger_event = { id = losp.91 days = 1 }
+	}
+}
+
+#next day after drink
+losp.90 = {
+	type = character_event
+	title = losp.90.t
+	theme = family	
+	desc = losp.90.desc	
+	
+	left_portrait = {
+		character = scope:actor
+		animation = pain
+	}
+	
+	immediate = {	
+		play_music_cue = "mx_cue_negative"
+		add_stress = minor_stress_gain 
+	}
+	
+	option = {
+		name = losp.90.a
+		trigger_event = losp.92
+	}
+}
+
+#next day after sex
+losp.91 = {
+	type = character_event
+	title = losp.91.t
+	theme = family	
+	desc = losp.91.desc	
+	
+	left_portrait = {
+		character = scope:actor
+		animation = ecstasy
+	}
+	
+	immediate = {	
+		#play_music_cue = "mx_cue_banquet"
+		add_stress = medium_stress_loss 
+	}
+	
+	option = {
+		name = losp.91.a
+		trigger_event = losp.92
+	}
+}
+
+#goodbye
+losp.92 = {
+	type = character_event
+	title = losp.92.t
+	theme = friendly	
+	desc = losp.92.desc	
+	
+	left_portrait = {
+		character = scope:actor
+		animation = happiness
+	}
+	right_portrait = {
+		character = scope:recipient
+		animation = happiness
+	}
+	
+	immediate = {	
+		#play_music_cue = "mx_cue_positive_effect"
+		scope:recipient = {
+			add_opinion = {
+				modifier = opinion_treated_well
+				target = scope:actor
+			}
+		}
+	}
+	
+	option = {
+		name = losp.92.a
+	}
+}

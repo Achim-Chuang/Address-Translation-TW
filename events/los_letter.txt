@@ -1,0 +1,89 @@
+﻿namespace = losl
+
+#reply
+losl.01 = {
+	type = letter_event	
+	
+	opening = {
+		desc = losl.01.opening
+	}
+	desc = losl.01.desc
+	sender = {
+		character = scope:recipient
+		animation = happiness
+	}
+	
+	option = {
+		name = losl.01.a
+		trigger_event = { id = losp.01 days = { 1 2 } }
+	}
+}
+
+#discuss about detail
+losl.02 = {
+	type = letter_event	
+	
+	opening = {
+		desc = losl.02.opening
+	}
+	desc = losl.02.desc
+	sender = {
+		character = scope:recipient
+		animation = scheme
+	}
+	
+	option = {
+		name = losl.02.a
+		custom_tooltip = losl.02.a.t
+	}
+	
+	option = {
+		name = losl.02.b
+		trigger_event = loscl.01
+		custom_tooltip = losl.02.b.t
+	}
+}
+
+#found someone
+losl.10 = {
+	hidden = yes	
+	
+	immediate = {
+		send_interface_message = {
+			type = event_spouse_task_good
+			title = losl_10_message
+			desc = losl_10_message_desc
+		}
+		scope:actor = {
+			add_character_flag = los_founded_someone
+			remove_character_flag = los_ask_for_someone
+		}
+	}
+}
+
+#letter of acknowledgement
+losl.20 = {
+	type = letter_event	
+	
+	opening = {
+		desc = losl.20.opening
+	}
+	desc = losl.20.desc
+	sender = {
+		character = scope:lost_potential_partner
+		animation = flirtation_left
+	}
+	immediate = {
+		scope:lost_potential_partner = {
+			add_opinion = {
+				modifier = opinion_take_me_home
+				target = scope:actor
+			}
+		}
+	}
+	option = {
+		name = losl.20.a
+		custom_tooltip = losl.20.a.t
+	}
+}
+

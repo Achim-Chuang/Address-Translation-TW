@@ -1,0 +1,539 @@
+﻿#los character templates
+#prowess diplomacy martial stewardship intrigue learning
+#diplomacy
+los_normal_diplomacy_character = {
+	age = { 30 50 }
+	gender_female_chance = 10
+	random_traits = yes 
+	random_traits_list = {
+		count = 1
+		education_diplomacy_2 = {}
+		education_diplomacy_3 = {}
+	} 
+	diplomacy = { 10 15 }
+	martial = { 3 10 }
+	stewardship = { 3 10 }
+	intrigue = { 3 10 }
+	learning = { 3 10 }
+	prowess = { 3 10 }
+	dynasty = none		
+}
+los_outstanding_diplomacy_character = {
+	age = { 28 35 }
+	gender_female_chance = 50
+	random_traits = yes 
+	random_traits_list = {
+		count = 1
+		education_diplomacy_3 = {}
+		education_diplomacy_4 = {}
+	} 
+	diplomacy = { 13 18 }
+	martial = { 8 15 }
+	stewardship = { 8 15 }
+	intrigue = { 8 15 }
+	learning = { 8 15 }
+	prowess = { 8 15 }
+	trait = diplomat
+	dynasty = none
+}
+los_unique_diplomacy_character = {
+	age = { 20 30 }
+	gender = female
+	random_traits = no
+	health = 10.0
+	fertility = 0.6
+	random_traits_list = {
+		count = 2
+		education_diplomacy_4 = {}
+		education_learning_4 = {}
+	}
+	random_traits_list = {
+		count = 1
+		beauty_good_3 = {}
+		intellect_good_3 = {}
+		physique_good_3 = {}
+	}
+	random_traits_list = {
+		count = 3
+		temperate = {}
+		patient = {}
+		humble = {}
+		strong = {}
+		diligent = {}
+		shrewd = {}
+		blademaster_3 = {}
+		physician_3 = {}
+	}
+	trait = diplomat
+	diplomacy = { 25 30 }
+	martial = { 15 20 }
+	stewardship = { 15 20 }
+	intrigue = { 15 20 }
+	learning = { 15 20 }
+	prowess = { 15 20 }
+	dynasty = none
+}
+#martial
+los_normal_martial_character = {
+	age = { 30 50 }
+	gender_female_chance = 10
+	random_traits = yes 
+	random_traits_list = {
+		count = 1
+		education_martial_2 = {}
+		education_martial_3 = {}
+	} 
+	martial = { 10 15 }
+	diplomacy = { 3 10 }
+	stewardship = { 3 10 }
+	intrigue = { 3 10 }
+	learning = { 3 10 }
+	prowess = { 3 10 }
+	dynasty = none
+}
+los_outstanding_martial_character = {
+	age = { 28 35 }
+	gender_female_chance = 50
+	random_traits = yes 
+	random_traits_list = {
+		count = 1
+		education_martial_3 = {}
+		education_martial_4 = {}
+	} 
+	martial = { 13 18 }
+	diplomacy = { 8 15 }
+	stewardship = { 8 15 }
+	intrigue = { 8 15 }
+	learning = { 8 15 }
+	prowess = { 8 15 }
+	trait = strategist
+	dynasty = none
+}
+los_unique_martial_character = {
+	age = { 20 30 }
+	gender = female
+	random_traits = no 
+	health = 10.0
+	fertility = 0.6
+	random_traits_list = {
+		count = 2
+		education_diplomacy_4 = {}
+		education_martial_4 = {}
+	} 
+	martial = { 25 30 }
+	diplomacy = { 15 20 }
+	stewardship = { 15 20 }
+	intrigue = { 15 20 }
+	learning = { 15 20 }
+	prowess = { 15 20 }
+	random_traits_list = {
+		count = 1
+		beauty_good_3 = { weight = { base = 10 } }
+		intellect_good_3 = { weight = { base = 10 } }
+		physique_good_3 = { weight = { base = 80 } }
+	}
+	random_traits_list = {
+		count = 3
+		temperate = {}
+		patient = {}
+		humble = {}
+		strong = {}
+		diligent = {}
+		shrewd = {}
+		blademaster_3 = {}
+		physician_3 = {}
+	}
+	trait = strategist
+	dynasty = none
+}
+#stewardship
+los_normal_stewardship_character = {
+	age = { 30 50 }
+	gender_female_chance = 10
+	random_traits = yes 
+	random_traits_list = {
+		count = 1
+		education_stewardship_2 = {}
+		education_stewardship_3 = {}
+	} 
+	stewardship = { 10 15 }
+	diplomacy = { 3 10 }
+	martial = { 3 10 }
+	intrigue = { 3 10 }
+	learning = { 3 10 }
+	prowess = { 3 10 }
+	dynasty = none
+}
+los_outstanding_stewardship_character = {
+	age = { 28 35 }
+	gender_female_chance = 50
+	random_traits = yes 
+	random_traits_list = {
+		count = 1
+		education_stewardship_3 = {}
+		education_stewardship_4 = {}
+	} 
+	stewardship = { 13 18 }
+	diplomacy = { 8 15 }
+	martial = { 8 15 }
+	intrigue = { 8 15 }
+	learning = { 8 15 }
+	prowess = { 8 15 }
+	trait = architect
+	dynasty = none
+}
+los_unique_stewardship_character = {
+	age = { 20 30 }
+	gender = female
+	random_traits = no 
+	health = 10.0
+	fertility = 0.6
+	random_traits_list = {
+		count = 2
+		education_stewardship_4 = {}
+		education_martial_4 = {}
+	} 
+	stewardship = { 25 30 }
+	diplomacy = { 15 20 }
+	martial = { 15 20 }
+	intrigue = { 15 20 }
+	learning = { 15 20 }
+	prowess = { 15 20 }
+	random_traits_list = {
+		count = 1
+		beauty_good_3 = {}
+		intellect_good_3 = {}
+		physique_good_3 = {}
+	}
+	random_traits_list = {
+		count = 3
+		temperate = {}
+		patient = {}
+		humble = {}
+		strong = {}
+		diligent = {}
+		shrewd = {}
+		blademaster_3 = {}
+		physician_3 = {}
+	}
+	trait = architect
+	dynasty = none
+}
+#intrigue
+los_normal_intrigue_character = {
+	age = { 30 50 }
+	gender_female_chance = 10
+	random_traits = yes 
+	random_traits_list = {
+		count = 1
+		education_intrigue_2 = {}
+		education_intrigue_3 = {}
+	} 
+	intrigue = { 10 15 }
+	diplomacy = { 3 10 }
+	martial = { 3 10 }
+	stewardship = { 3 10 }
+	learning = { 3 10 }
+	prowess = { 3 10 }
+	dynasty = none
+}
+los_outstanding_intrigue_character = {
+	age = { 28 35 }
+	gender_female_chance = 50
+	random_traits = yes 
+	random_traits_list = {
+		count = 1
+		education_intrigue_3 = {}
+		education_intrigue_4 = {}
+	} 
+	intrigue = { 13 18 }
+	diplomacy = { 8 15 }
+	martial = { 8 15 }
+	stewardship = { 8 15 }
+	learning = { 8 15 }
+	prowess = { 8 15 }
+	trait = schemer
+	dynasty = none
+}
+los_unique_intrigue_character = {
+	age = { 20 30 }
+	gender = female
+	random_traits = no 
+	health = 10.0
+	fertility = 0.6
+	random_traits_list = {
+		count = 2
+		education_stewardship_4 = {}
+		education_intrigue_4 = {}
+	} 
+	intrigue = { 25 30 }
+	diplomacy = { 15 20 }
+	martial = { 15 20 }
+	stewardship = { 15 20 }
+	learning = { 15 20 }
+	prowess = { 15 20 }
+	random_traits_list = {
+		count = 1
+		beauty_good_3 = {}
+		intellect_good_3 = {}
+		physique_good_3 = {}
+	}
+	random_traits_list = {
+		count = 3
+		temperate = {}
+		patient = {}
+		humble = {}
+		strong = {}
+		diligent = {}
+		shrewd = {}
+		blademaster_3 = {}
+		physician_3 = {}
+	}
+	trait = schemer
+	dynasty = none
+}
+#learning
+los_normal_learning_character = {
+	age = { 30 50 }
+	gender_female_chance = 10
+	random_traits = yes 
+	random_traits_list = {
+		count = 1
+		education_learning_2 = {}
+		education_learning_3 = {}
+	} 
+	learning = { 10 15 }
+	diplomacy = { 3 10 }
+	martial = { 3 10 }
+	stewardship = { 3 10 }
+	intrigue = { 3 10 }
+	prowess = { 3 10 }
+	dynasty = none
+}
+los_outstanding_learning_character = {
+	age = { 28 35 }
+	gender_female_chance = 50
+	random_traits = yes 
+	random_traits_list = {
+		count = 1
+		education_learning_3 = {}
+		education_learning_4 = {}
+	} 
+	learning = { 13 18 }
+	diplomacy = { 8 15 }
+	martial = { 8 15 }
+	stewardship = { 8 15 }
+	intrigue = { 8 15 }
+	prowess = { 8 15 }
+	trait = scholar
+	dynasty = none
+}
+los_unique_learning_character = {
+	age = { 20 30 }
+	gender = female
+	random_traits = no 
+	health = 10.0
+	fertility = 0.6
+	random_traits_list = {
+		count = 2
+		education_learning_4 = {}
+		education_intrigue_4 = {}
+	} 
+	learning = { 25 30 }
+	diplomacy = { 15 20 }
+	martial = { 15 20 }
+	stewardship = { 15 20 }
+	intrigue = { 15 20 }
+	prowess = { 15 20 }
+	random_traits_list = {
+		count = 1
+		beauty_good_3 = {}
+		intellect_good_3 = {}
+		physique_good_3 = {}
+	}
+	random_traits_list = {
+		count = 3
+		temperate = {}
+		patient = {}
+		humble = {}
+		strong = {}
+		diligent = {}
+		shrewd = {}
+		blademaster_3 = {}
+		physician_3 = {}
+	}
+	trait = scholar
+	dynasty = none
+}
+#beauty
+los_normal_beauty_character = {
+	age = { 20 30 }
+	gender = female
+	random_traits = yes 
+	health = 10.0
+	fertility = 0.6
+	random_traits_list = {
+		count = 1
+		education_diplomacy_2 = {}
+		education_learning_2 = {}
+		education_martial_2 = {}
+		education_intrigue_2 = {}
+		education_stewardship_2 = {}
+	}
+	random_traits_list = {
+		count = 1
+		beauty_good_2 = { weight = { base = 80 } }
+		beauty_good_3 = { weight = { base = 20 } }
+	} 
+	diplomacy = { 5 12 }
+	martial = { 5 12 }
+	stewardship = { 5 12 }
+	intrigue = { 5 12 }
+	learning = { 5 12 }
+	prowess = { 5 12 }
+	random_traits_list = {
+		count = 1
+		lustful = { weight = { base = 60 } }
+		fecund = { weight = { base = 30 } }
+		whole_of_body = { weight = { base = 10 } }
+	}
+	dynasty = none
+}
+los_outstanding_beauty_character = {
+	age = { 20 30 }
+	gender = female
+	random_traits = yes 
+	health = 10.0
+	fertility = 0.6
+	random_traits_list = {
+		count = 1
+		education_diplomacy_3 = {}
+		education_learning_3 = {}
+		education_martial_3 = {}
+		education_intrigue_3 = {}
+		education_stewardship_3 = {}
+	}
+	random_traits_list = {
+		count = 1
+		beauty_good_2 = { weight = { base = 20 } }
+		beauty_good_3 = { weight = { base = 80 } }
+	} 
+	diplomacy = { 10 13 }
+	martial = { 10 13 }
+	stewardship = { 10 13 }
+	intrigue = { 10 13 }
+	learning = { 10 13 }
+	prowess = { 10 13 }
+	random_traits_list = {
+		count = 2
+		lustful = { weight = { base = 20 } }
+		fecund = { weight = { base = 40 } }
+		whole_of_body = { weight = { base = 60 } }
+	}
+	random_traits_list = {
+		count = 2
+		temperate = {}
+		patient = {}
+		humble = {}
+		strong = {}
+		diligent = {}
+		shrewd = {}
+		blademaster_3 = {}
+		physician_3 = {}
+	}
+	dynasty = none
+}
+los_unique_beauty_character = {
+	age = { 20 30 }
+	gender = female
+	random_traits = yes 
+	health = 10.0
+	fertility = 0.6
+	random_traits_list = {
+		count = 2
+		education_diplomacy_4 = {}
+		education_learning_4 = {}
+		education_martial_4 = {}
+		education_intrigue_4 = {}
+		education_stewardship_4 = {}
+	}
+	random_traits_list = {
+		count = 1
+		beauty_good_3 = { weight = { base = 80 } }
+	} 
+	diplomacy = { 10 13 }
+	martial = { 10 13 }
+	stewardship = { 10 13 }
+	intrigue = { 10 13 }
+	learning = { 10 13 }
+	prowess = { 10 13 }
+	random_traits_list = {
+		count = 3
+		chaste = { weight = { base = 20 } }
+		fecund = { weight = { base = 20 } }
+		whole_of_body = { weight = { base = 60 } }
+	}
+	random_traits_list = {
+		count = 3
+		temperate = {}
+		patient = {}
+		humble = {}
+		strong = {}
+		diligent = {}
+		shrewd = {}
+		blademaster_3 = {}
+		physician_3 = {}
+	}
+	dynasty = none
+}
+#goddess
+los_goddess = {
+	age = { 20 30 }
+	gender = female
+	random_traits = no
+	health = 10.0
+	fertility = 0.6
+	random_traits_list = {
+		count = 5
+		education_diplomacy_4 = {}
+		education_learning_4 = {}
+		education_intrigue_4 = {}
+		education_martial_4 = {}
+		education_stewardship_4 = {}
+	}
+	diplomacy = { 40 50 }
+	martial = { 40 50 }
+	stewardship = { 40 50 }
+	intrigue = { 40 50 }
+	learning = { 40 50 }
+	prowess = { 40 50 }
+	random_traits_list = {
+		count = 3
+		beauty_good_3 = {}
+		intellect_good_3 = {}
+		physique_good_3 = {}
+	}
+	random_traits_list = {
+		count = 5
+		temperate = {}
+		patient = {}
+		humble = {}
+		strong = {}
+		diligent = {}
+		shrewd = {}
+		blademaster_3 = {}
+		physician_3 = {}
+	}
+	trait = diplomat
+	trait = schemer
+	trait = strategist
+	trait = architect
+	trait = scholar
+	trait = chaste
+	trait = lifestyle_herbalist
+	trait = whole_of_body
+	trait = avaricious
+	trait = architect
+	trait = gallant
+	dynasty = none
+}

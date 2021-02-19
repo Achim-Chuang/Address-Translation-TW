@@ -1,0 +1,31 @@
+﻿los_variable_interaction = {
+	common_interaction = yes
+	category = interaction_category_friendly
+	desc = los_variable_interaction.desc
+	title = los_variable_interaction.t
+	use_diplomatic_range = yes
+	ignores_pending_interaction_block = yes
+	auto_accept = yes
+		
+	is_shown = {		
+		scope:recipient = { 
+			this = scope:actor
+		}
+		scope:actor = { 
+			has_character_flag = LOS_START
+			is_ai = no
+		}
+	}
+	
+	send_option = {
+		is_shown = {}
+		is_valid = {}
+		localization = los_variable_interaction.option
+	}
+		
+	on_accept = {	
+		scope:actor = {
+			trigger_event = losc.01
+		}
+	}
+}

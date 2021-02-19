@@ -1,0 +1,275 @@
+#codebase
+
+#set variable ( female )
+los.01 = {
+	hidden = yes
+	immediate = {
+		if = {
+			limit = {
+				NOT = { exists = root.var:los_climax_times_extra }
+			}
+			set_variable = {
+				name = los_climax_times_extra
+				value = 0
+			}
+		}
+		if = {
+			limit = {
+				NOT = { exists = root.var:los_ahegao_times }
+			}
+			set_variable = {
+				name = los_ahegao_times
+				value = 0
+			}
+		}		
+		if = {
+			limit = { age <= 25 }
+			set_variable = {
+				name = los_climax_times_base
+				value = 5
+			}
+		}
+		else_if = {
+			limit = { 
+				age > 25
+				age <= 35
+			}
+			set_variable = {
+				name = los_climax_times_base
+				value = 4
+			}
+		}
+		else_if = {
+			limit = { 
+				age > 35
+				age <= 50
+			}
+			set_variable = {
+				name = los_climax_times_base
+				value = 3
+			}
+		}
+		else_if = {
+			limit = { 
+				age > 50
+				age <= 65 
+			}
+			set_variable = {
+				name = los_climax_times_base
+				value = 2
+			}
+		}
+		else = {
+			set_variable = {
+				name = los_climax_times_base
+				value = 1
+			}
+		}
+		set_variable = {
+			name = los_climax_times_total
+			value = root.var:los_climax_times_base
+		}
+		change_variable = {
+			name = los_climax_times_total
+			value = root.var:los_climax_times_extra
+		}
+	}
+}
+
+#set local temporary (in event for female)
+los.02 = {
+	hidden = yes
+	
+	immediate = {
+		set_variable = {
+			name = rest_climax_times
+			value = root.var:los_climax_times_total
+			days = 1
+		}
+	}
+}
+
+#choose the position
+los.10 = {
+	type = character_event
+	title = los.10.t
+	theme = love	
+	desc = los.10.desc	
+	
+	override_background = {
+        event_background = 
+    }	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+	}
+	right_portrait = {
+		character = scope:los_sexual_partner
+		animation = flirtation
+	}	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+
+	option = {
+		name = los.10.a
+		trigger_event = los.11
+		custom_tooltip = LOS_SERVE
+	}
+	option = {
+		name = los.10.a
+		trigger_event = los.12
+		custom_tooltip = LOS_FONDLE
+	}
+	option = {
+		trigger = {
+			los_sexual_partner.var:los_ahegao_times >= 2
+		}
+		name = los.10.a
+		trigger_event = los.13
+		custom_tooltip = LOS_VAGINA
+	}
+	option = {
+		trigger = {
+			los_sexual_partner.var:los_ahegao_times >= 2
+		}
+		name = los.10.a
+		trigger_event = los.14
+		custom_tooltip = LOS_ANUS
+	}
+}
+
+#serve
+los.11 = {
+	type = character_event
+	title = los.11.t
+	theme = love	
+	desc = los.11.desc	
+	
+	override_background = {
+        event_background = 
+    }	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+	}
+	right_portrait = {
+		character = scope:los_sexual_partner
+		triggered_animation = {
+			trigger = {
+				los_sexual_partner.var:los_ahegao_times < 2
+			}
+			animation = flirtation
+		}
+		triggered_animation = {
+			trigger = {
+				los_sexual_partner.var:los_ahegao_times >= 2
+				los_sexual_partner.var:los_ahegao_times < 4
+			}
+			animation = happiness
+		}
+		triggered_animation = {
+			trigger = {
+				los_sexual_partner.var:los_ahegao_times >= 4
+			}
+			animation = love
+		}
+	}
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+
+	option = {
+		name = los.11.a
+		trigger_event = los.20
+		custom_tooltip = LOS_SERVE
+	}
+	option = {
+		name = los.11.a
+		trigger_event = los.21
+		custom_tooltip = LOS_FONDLE
+	}
+	option = {
+		trigger = {
+			los_sexual_partner.var:los_ahegao_times >= 2
+		}
+		name = los.11.a
+		trigger_event = los.22
+		custom_tooltip = LOS_VAGINA
+	}
+	option = {
+		trigger = {
+			los_sexual_partner.var:los_ahegao_times >= 2
+		}
+		name = los.11.a
+		trigger_event = los.23
+		custom_tooltip = LOS_ANUS
+	}
+}
+
+#fondle
+los.12 = {
+
+}
+
+#vagina
+lost.13 = {
+
+}
+
+#anus
+lost.14 = {
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

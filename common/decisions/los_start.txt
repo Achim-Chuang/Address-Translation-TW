@@ -1,0 +1,81 @@
+los_start_decision = {
+	title = los_start_decision_t
+	picture = "gfx\interface\illustrations\decisions\los_start.dds"
+	major = yes
+	desc = los_start_decision_desc
+	ai_will_do = 0
+	
+	is_shown = {
+	    NOT = { has_character_flag = LOS_START }
+    }
+	
+	is_valid = {
+		root = { 
+			is_adult = yes			
+		}
+	}
+	
+	effect = { 
+		custom_tooltip = the_start_of_legend
+		
+		hidden_effect = {
+			add_character_flag = LOS_START
+			add_character_flag = used_romancing_skills_to_keep_lovers
+			set_variable = {
+				name = los_cuming_times_extra
+				value = 0
+			}
+			if = {
+				limit = { age <= 25 }
+				set_variable = {
+					name = los_cuming_times_base
+					value = 5
+				}
+			}
+			else_if = {
+				limit = { 
+					age > 25
+					age <= 35
+				}
+				set_variable = {
+					name = los_cuming_times_base
+					value = 4
+				}
+			}
+			else_if = {
+				limit = { 
+					age > 35
+					age <= 50
+				}
+				set_variable = {
+					name = los_cuming_times_base
+					value = 3
+				}
+			}
+			else_if = {
+				limit = { 
+					age > 50
+					age <= 65 
+				}
+				set_variable = {
+					name = los_cuming_times_base
+					value = 2
+				}
+			}
+			else = {
+				set_variable = {
+					name = los_cuming_times_base
+					value = 1
+				}
+			}
+			set_variable = {
+				name = los_cuming_times_total
+				value = root.var:los_cuming_times_base
+			}
+			change_variable = {
+				name = los_cuming_times_total
+				value = root.var:los_cuming_times_extra
+			}
+		}
+	}
+}

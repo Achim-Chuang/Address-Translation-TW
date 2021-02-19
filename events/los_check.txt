@@ -1,0 +1,159 @@
+﻿namespace = losc
+
+losc.01 = { #show the summary
+	type = character_event	
+	title = losc.01.t
+	theme = love	
+	desc = {
+		desc = losc.01.desc.a
+		desc = losc.01.desc.b
+		desc = losc.01.desc.c
+	}
+	
+	right_portrait = {
+		character = scope:actor
+		animation = happiness
+	}
+	
+	immediate = {
+		if = {
+			limit = { age <= 25 }
+			set_variable = {
+				name = los_cuming_times_base
+				value = 5
+			}
+		}
+		else_if = {
+			limit = { 
+				age > 25
+				age <= 35
+			}
+			set_variable = {
+				name = los_cuming_times_base
+				value = 4
+			}
+		}
+		else_if = {
+			limit = { 
+				age > 35
+				age <= 50
+			}
+			set_variable = {
+				name = los_cuming_times_base
+				value = 3
+			}
+		}
+		else_if = {
+			limit = { 
+				age > 50
+				age <= 65 
+			}
+			set_variable = {
+				name = los_cuming_times_base
+				value = 2
+			}
+		}
+		else = {
+			set_variable = {
+				name = los_cuming_times_base
+				value = 1
+			}
+		}
+		set_variable = {
+			name = los_cuming_times_total
+			value = root.var:los_cuming_times_base
+		}
+		change_variable = {
+			name = los_cuming_times_total
+			value = root.var:los_cuming_times_extra
+		}
+	}
+	
+	option = {
+		name = losc.01.a
+	}
+}	
+
+losc.02 = { #check the base
+	hidden = yes
+	
+	immediate = {
+		if = {
+			limit = { age <= 25 }
+			set_variable = {
+				name = los_cuming_times_base
+				value = 5
+			}
+		}
+		else_if = {
+			limit = { 
+				age > 25
+				age <= 35
+			}
+			set_variable = {
+				name = los_cuming_times_base
+				value = 4
+			}
+		}
+		else_if = {
+			limit = { 
+				age > 35
+				age <= 50
+			}
+			set_variable = {
+				name = los_cuming_times_base
+				value = 3
+			}
+		}
+		else_if = {
+			limit = { 
+				age > 50
+				age <= 65 
+			}
+			set_variable = {
+				name = los_cuming_times_base
+				value = 2
+			}
+		}
+		else = {
+			set_variable = {
+				name = los_cuming_times_base
+				value = 1
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

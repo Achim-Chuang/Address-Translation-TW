@@ -1,0 +1,201 @@
+namespace = losd
+
+losd.001 = {
+	type = character_event
+	title = "debug"
+	desc = "debug"
+	theme = party
+	
+	override_background = {
+        event_background = tavern
+    }
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_someone
+		animation = prisondungeon
+		remove_default_outfit = yes
+	}
+	
+	immediate = {
+		root = {
+			save_scope_as = actor
+		}
+		random_list = {
+			10 = { 
+				create_character = {
+					template = los_outstanding_diplomacy_character
+					location = root.capital_province
+					faith = root.faith
+					culture = root.culture
+					add_gold = 100
+					add_piety = 100
+					add_prestige = 100
+					save_scope_as = lost_someone 
+				}
+			}
+			80 = { 
+				create_character = {
+					template = los_unique_diplomacy_character
+					location = root.capital_province
+					faith = root.faith
+					culture = root.culture
+					add_gold = 300
+					add_piety = 300
+					add_prestige = 300
+					set_sexuality = homosexual
+					save_scope_as = lost_someone 
+				}
+			}
+			10 = { 
+				create_character = {
+					template = los_goddess
+					location = root.capital_province
+					faith = root.faith
+					culture = root.culture
+					add_gold = 5000
+					add_piety = 5000
+					add_prestige = 5000
+					set_sexuality = asexual
+					save_scope_as = lost_someone
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = "debug"
+		#custom_tooltip = lost.40.a.t
+		#trigger_event = lost.03
+	}
+#	option = {
+#		name = lost.40.b
+#		cost = { gold = 5 }
+#		custom_tooltip = lost.40.b.t		
+#		trigger_event = lost.41
+#	}
+}
+
+losd.02 = {
+	type = character_event
+	title = "debug"
+	desc = "debug"
+	theme = party
+	
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation_left
+		remove_default_outfit = yes
+	}
+	
+	immediate = {
+		root = { save_scope_as = actor }
+		every_vassal_or_below = {
+			if = {
+				limit = {
+					age <= 35
+					is_pregnant = no
+					is_totally_healthy = yes
+					is_female = yes
+					is_married = yes
+					is_alive = yes
+					is_imprisoned = no
+					is_commanding_army = no
+					NOT = { is_child_of = scope:actor }
+					NOT = { is_consort_of = scope:actor }
+				}				
+				add_to_temporary_list = potential_female_list
+			}
+			else_if = {
+				limit ={
+					is_female = no
+					is_married = yes
+					is_alive = yes
+				}
+				every_consort = {
+					limit = {
+						age <= 35
+						is_pregnant = no
+						is_totally_healthy = yes
+						is_alive = yes
+						is_imprisoned = no
+						is_commanding_army = no
+						NOT = { is_child_of = scope:actor }
+						NOT = { is_consort_of = scope:actor }
+					}
+					add_to_temporary_list = potential_female_list
+				}
+			}
+		}
+		every_neighboring_top_liege_realm_owner = {
+			every_vassal_or_below = {
+				if = {
+					limit = {
+						age <= 35
+						is_pregnant = no
+						is_totally_healthy = yes
+						is_female = yes
+						is_alive = yes
+						is_married = yes
+						is_imprisoned = no
+						is_commanding_army = no
+						NOT = { is_child_of = scope:actor }
+						NOT = { is_consort_of = scope:actor }
+					}				
+					add_to_temporary_list = potential_female_list
+				}
+				else_if = {
+					limit = {
+						is_female = no
+						is_alive = yes
+						is_married = yes
+					}
+					every_consort = {
+						limit = {
+							age <= 35
+							is_pregnant = no
+							is_totally_healthy = yes
+							is_alive = yes
+							is_imprisoned = no
+							is_commanding_army = no
+							NOT = { is_child_of = scope:actor }
+							NOT = { is_consort_of = scope:actor }
+						}
+						add_to_temporary_list = potential_female_list
+					}
+				}
+			}
+		}		
+		
+		random_in_list = {
+			list = potential_female_list
+			weight = {
+				base = 100
+				compare_modifier = {
+					value = ai_sociability
+				}				
+				modifier = {
+					add = 100
+					has_trait = lustful
+				}
+			}
+			save_scope_as = lost_potential_partner
+		}
+		
+		if = {
+			limit = {
+				exists = scope:lost_potential_partner
+			}
+			trigger_event = lost.40
+		}
+		else = {
+			trigger_event = lost.03
+		}
+	}
+	option = {
+		name = "debug"
+	}
+}

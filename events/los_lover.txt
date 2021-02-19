@@ -1,0 +1,48 @@
+﻿namespace = los_lover
+
+scripted_trigger lover_01_candidate_trigger = {
+	is_alive = yes
+	is_imprisoned = no
+	is_totally_healthy = yes
+	is_pregnant = no
+	is_commanding_army = no
+}	
+
+los_lover.01 = {
+	hidden = yes
+	trigger = {
+		any_relation = {
+			type = secret_lover
+			lover_01_candidate_trigger = yes
+		}
+	}
+	
+	immediate = {
+		save_scope_as = los_lover_01
+		random_relation = {
+			tpye = secret_lover
+			limit = {
+				lover_01_candidate_trigger
+			}
+			save_scope_as = los_lover_02
+		}
+		trigger_event = losl.10
+	}
+}
+
+los_lover.10 = {
+	type = character_event
+	title = los_lover.10.t
+	desc = los_lover.10.desc
+	theme = lover_relation
+	
+	left_portrait = {
+		character = scope:los_lover_01
+		animation = love
+	}
+	right_portrait = {
+		character = scope:los_lover_02
+		animation = love
+	}
+}
+		

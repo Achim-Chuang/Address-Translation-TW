@@ -1,0 +1,26 @@
+﻿l_simp_chinese:
+
+ los_invited_interaction:0 "宴请"
+ los_invited_interaction_desc:0 "邀请[recipient.GetTitledFirstName]前来参加宴会"
+ los_invite_to_your_city:0 "写信邀请[recipient.GetTitledFirstName]前来共进晚餐\n或许还会有意外收获？！"
+ los_invited_accept_01:0 "[recipient.GetTitledFirstName]接受了邀请"
+ los_time_tip_party_01:0 "车队已经启程，大概一两日便到"
+ 
+ los_deceive_her_spouse_interaction:0 "‘澄清’"
+ los_deceive_her_spouse_interaction_desc:0 "[recipient.GetFirstName]的丈夫知道了你和她的奸情。你打算瞒天过海。"
+ LOS_DECEIVE_HER_SPOUSE:0"你将与[recipient.GetFirstName]一起，商量如何掩盖你与她之间的一切"
+ 
+ los_deceive_my_spouse_interaction:0 "‘自证’"
+ los_deceive_my_spouse_interaction_desc:0 "[recipient.GetFirstName]的妻子知道了你在外面沾花惹草。你打算自证清白。"
+ LOS_DECEIVE_MY_SPOUSE:0 "花言巧语远胜事实雄辩！"
+ 
+ los_bury_secret_of_lover_interaction:0 "深埋于心"
+ los_bury_secret_of_lover_interaction.desc:0 "将情愫永藏心底"
+ los_bury_secret_of_lover_interaction.tooltip:0 "你与[recipient.GetTitledFirstName]的情人秘密将不会被任何人发现"
+
+ los_variable_interaction:0 "精力检查"
+ los_variable_interaction.desc:0 "年轻气盛亦或是年老体衰？"
+ los_variable_interaction.option:0 "仅取决于你的年龄与额外加成"
+
+ los_cover_yourself_interaction:0 "披着羊皮的狼"
+ los_cover_yourself_interaction.desc:0 "掩盖你的‘奸夫’、‘私通者’或‘乱伦’特质"

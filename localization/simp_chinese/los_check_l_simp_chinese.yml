@@ -1,0 +1,7 @@
+﻿l_simp_chinese:
+
+ losc.01.t:0 "精力检查"
+ losc.01.desc.a:0 "当前单次做爱最高射精次数为[ROOT.Var('los_cuming_times_total').GetValue|V0]次\n"
+ losc.01.desc.b:0 "基础次数为[ROOT.Var('los_cuming_times_base').GetValue|V0]次\n"
+ losc.01.desc.c:0 "额外次数为[ROOT.Var('los_cuming_times_extra').GetValue|V0]次\n"
+ losc.01.a:0 "我知道了"

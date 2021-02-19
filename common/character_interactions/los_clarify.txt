@@ -1,0 +1,220 @@
+﻿los_deceive_her_spouse_interaction = {
+	common_interaction = yes
+	category = interaction_category_friendly
+	desc = los_deceive_her_spouse_interaction_desc
+	use_diplomatic_range = yes
+	ignores_pending_interaction_block = yes
+	auto_accept = yes
+	is_highlighted = { always = yes }
+	ai_will_do = 0
+	
+	is_shown = {
+		scope:recipient = { 
+			is_female = yes
+			any_consort = {
+				is_alive = yes
+				is_ai = no
+				or = {
+					has_opinion_modifier = {
+						modifier = unfaithful_spouse_exposed_opinion
+						target = scope:recipient
+					}
+					has_opinion_modifier = {
+						modifier = unfaithful_spouse_discovered_opinion
+						target = scope:recipient
+					}
+					has_opinion_modifier = {
+						modifier = slept_with_spouse_discovered_opinion
+						target = scope:actor
+					}
+					has_opinion_modifier = {
+						modifier = slept_with_spouse_exposed_opinion
+						target = scope:actor
+					}
+				}
+			}			
+		}
+		scope:actor = { 
+			has_character_flag = LOS_START
+		}
+	}
+	
+	on_accept = {
+		scope:actor = {
+			custom_tooltip = LOS_DECEIVE_HER_SPOUSE
+			trigger_event = losl.02
+		}
+	}
+}
+
+los_deceive_my_spouse_interaction = {
+	common_interaction = yes
+	category = interaction_category_friendly
+	desc = los_deceive_my_spouse_interaction_desc
+	use_diplomatic_range = yes
+	ignores_pending_interaction_block = yes
+	auto_accept = yes
+	is_highlighted = { always = yes }
+	ai_will_do = 0
+	
+	is_shown = {
+		scope:actor = { 
+			is_female = yes
+			any_consort = {
+				is_alive = yes
+				or = {
+					has_opinion_modifier = {
+						modifier = unfaithful_spouse_exposed_opinion
+						target = scope:actor
+					}
+					has_opinion_modifier = {
+						modifier = unfaithful_spouse_discovered_opinion
+						target = scope:actor
+					}
+				}
+			}			
+		}
+		scope:actor = { 
+			has_character_flag = LOS_START
+		}
+	}
+	
+	on_accept = {
+		scope:actor = {
+			add_stress = medium_stress_loss
+			custom_tooltip = LOS_DECEIVE_MY_SPOUSE
+			every_consort = {
+				limit = { is_alive = yes }
+				if = {
+					limit = {
+						has_opinion_modifier = {
+							modifier = unfaithful_spouse_exposed_opinion
+							target = scope:actor
+						}
+					}
+					remove_opinion = {
+						modifier = unfaithful_spouse_exposed_opinion
+						target = scope:actor
+					}
+					add_opinion = {
+						modifier = opinion_guilt
+						target = scope:actor
+					}					
+				}
+				if = {
+					limit = {
+						has_opinion_modifier = {
+							modifier = unfaithful_spouse_discovered_opinion
+							target = scope:actor
+						}
+					}
+					remove_opinion = {
+						modifier = unfaithful_spouse_discovered_opinion
+						target = scope:actor
+					}
+					add_opinion = {
+						modifier = opinion_guilt
+						target = scope:actor
+					}
+				}
+			}
+		}
+	}
+}
+
+los_bury_secret_of_lover_interaction = {
+	common_interaction = yes
+	category = interaction_category_friendly
+	desc = los_bury_secret_of_lover_interaction.desc
+	use_diplomatic_range = yes
+	ignores_pending_interaction_block = yes
+	auto_accept = yes
+	is_highlighted = { always = yes }
+	ai_will_do = 0
+	
+	is_shown = {
+		scope:recipient = {
+			NOT = { this = scope:actor }
+			any_secret = {				
+				limit = {
+					secret_type = secret_lover					
+					secret_target = scope:actor
+				}
+			}
+			has_relation_lover = scope:actor
+		}
+		scope:actor = {
+			is_ai = no
+			has_character_flag = LOS_START
+			any_secret = {				
+				limit = {
+					secret_type = secret_lover					
+					secret_target = scope:recipient
+				}
+			}
+		}
+	}
+	
+	on_accept = {
+		scope:recipient = {
+			every_secret = {
+				limit = {
+					secret_type = secret_lover
+					secret_target = scope:actor
+				}
+				remove_secret = yes
+			}
+		}
+		scope:actor = {
+			custom_tooltip = los_bury_secret_of_lover_interaction.tooltip
+			every_secret = {
+				limit = {
+					secret_type = secret_lover
+					secret_target = scope:recipient
+				}
+				remove_secret = yes
+			}
+		}		
+	}
+}
+
+los_cover_yourself_interaction = {
+	common_interaction = yes
+	category = interaction_category_friendly
+	desc = los_cover_yourself_interaction.desc
+	use_diplomatic_range = no
+	ignores_pending_interaction_block = yes
+	auto_accept = yes
+	ai_will_do = 0
+	
+	is_shown = {
+		scope:recipient = {
+			this = scope:actor
+			or = {
+				has_trait = adulterer
+				has_trait = fornicator
+				has_trait = incestuous
+			}
+			has_character_flag = LOS_START
+		}
+	}
+	
+	on_accept = {
+		scope:recipient = {
+			if = {
+				limit = { has_trait = adulterer }
+				remove_trait = adulterer
+			}
+			if = {
+				limit = { has_trait = fornicator }
+				remove_trait = fornicator
+			}
+			if = {
+				limit = { has_trait = incestuous }
+				remove_trait = incestuous
+			}
+		}
+	}
+}
+		
+	

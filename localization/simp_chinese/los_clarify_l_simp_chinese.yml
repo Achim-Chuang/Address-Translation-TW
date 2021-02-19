@@ -1,0 +1,11 @@
+﻿l_simp_chinese:
+
+ loscl.01.t:0 "绝妙的计划"
+ loscl.01.desc:0 "文本待定"
+ loscl.01.a:0 "天衣无缝！"
+ loscl.01.tooltip:0 "所有人都会认为你们是清白的"
+ 
+ loscl_clarify.m.01.t:0 "成功欺骗"
+ loscl_clarify.m.01.desc:0 "[recipient.GetFirstName]是天生的演员，成功地欺骗了所有人。她的丈夫痛哭流涕地把她从监牢中释放出来。"
+ loscl_clarify.m.02.t:0 "成功欺骗"
+ loscl_clarify.m.02.desc:0 "[recipient.GetFirstName]是天生的演员，成功地欺骗了所有人。她的丈夫对曾经的‘不信任’后悔不已。"

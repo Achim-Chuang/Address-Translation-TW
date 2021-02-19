@@ -1,0 +1,20 @@
+﻿l_simp_chinese:
+
+ losl.01.opening:0 "致尊敬的[actor.GetTitledFirstNameNoTooltip]阁下："
+ losl.01.desc:0 "感谢您的邀请，在下不胜荣幸。期待与您的会面！"
+ losl.01.a:0"仆从们，筹备宴会吧"
+ 
+ losl.02.opening:0 "致我的爱人："
+ losl.02.desc:0 "卑鄙的杂碎不知从哪知道了我们的事，还胆敢公之于众。为了我们的未来，我认为我们需要做些什么。希望这不会影响我们的感情。"
+ losl.02.a:0 "随他去吧！"
+ losl.02.a.t:0 "什么都不做"
+ losl.02.b:0 "我们来演一场戏吧"
+ losl.02.b.t:0 "编造一个完美的谎言"
+ 
+ losl_10_message:0 "酒馆老板来信"
+ losl_10_message_desc:0 "尊敬的[actor.GetTitledFirstNameNoTooltip]阁下，依照您的委托，我找到了一位。下次来酒馆，我会为您介绍。"
+ 
+ losl.20.opening:0 "致尊敬的[actor.GetTitledFirstNameNoTooltip]阁下:"
+ losl.20.desc:0 "对于前些天酒后失态的事我感到非常抱歉。希望能得到您的谅解。"
+ losl.20.a:0 "好吧，但愿下次别再喝醉了"
+ losl.20.a.t:0 "还算是个有礼貌的人"

@@ -1,0 +1,9 @@
+﻿l_english:
+ loscl.01.t:0 "Excellent plan"
+ loscl.01.desc:0 "The texts is working in progress"
+ loscl.01.a:0 "Flawless work！"
+ loscl.01.tooltip:0 "Everyone will conside you are innocent"
+ loscl_clarify.m.01.t:0 "Successful deception"
+ loscl_clarify.m.01.desc:0 "[recipient.GetFirstName] is a born actress and succeeded in fooling everyone. Her husband bursted into tears and released her from the prison."
+ loscl_clarify.m.02.t:0 "Successful deception"
+ loscl_clarify.m.02.desc:0 "[recipient.GetFirstName] is a born actress and succeeded in fooling everyone.Her husband regretted his ‘mistrust’ now."

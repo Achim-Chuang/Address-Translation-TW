@@ -1,0 +1,202 @@
+﻿l_simp_chinese:
+
+ lost.01.t:0 "热闹的酒馆"
+ lost.01.desc:0 "文本待定"
+ lost.01.a:0 "我想找个能力出众的人才"
+ lost.01.a.t:0 "委托老板寻找一位能力出众的强者"
+ lost.01.b:0 "来一大杯冰啤酒！"
+ lost.01.b.t:0 "谁能拒绝一大杯冰啤酒呢？"
+ 
+ lost.04.t:0 "大杯冰啤酒"
+ lost.04.desc:0 "文本待定"
+ lost.04.a:0 "真是痛快"
+ lost.04.a.t:0 "美味的啤酒总能让人忘记忧愁"
+ 
+ lost.10.t:0 "求贤若渴"
+ lost.10.desc:0 "文本待定"
+ lost.10.a:0 "我想找一位卓越的外交官"
+ lost.10.a.t:0 "委托寻找外交人才"
+ lost.10.b:0 "我想找一位杰出的军事家"
+ lost.10.b.t:0 "委托寻找军事人才"
+ lost.10.c:0 "我想找一位精明的管理者"
+ lost.10.c.t:0 "委托寻找管理人才"
+ lost.10.d:0 "还有其他选择吗？"
+ lost.10.d.t:0 "询问是否还有其他类型的人才"
+ 
+ lost.11.t:0 "求贤若渴"
+ lost.11.desc:0 "文本待定"
+ lost.11.a:0 "我想找一位算无遗策的军师"
+ lost.11.a.t:0 "委托寻找谋略人才"
+ lost.11.b:0 "我想找一位睿智的学者"
+ lost.11.b.t:0 "委托寻找学术人才"
+ lost.11.c:0 "我想找一位绝代风华的美人"
+ lost.11.c.t:0 "委托寻找美女"
+ lost.11.d:0 "还是算了吧"
+ lost.11.d.t:0 "喝酒要紧"
+ 
+ lost.12.t:0 "招募资金"
+ lost.12.desc:0 "文本待定"
+ lost.12.a:0 "手头有点紧"
+ lost.12.a.t:0 "大概能招个寂寞？"
+ lost.12.b:0 "请务必精打细算"
+ lost.12.b.t:0 "成功人士的轻奢选择"
+ lost.12.c:0 "老子有的是钱"
+ lost.12.c.t:0 "性价比是什么？我只要最好的！"
+ 
+ lost.13.t:0 "再来一杯"
+ lost.13.desc:0 "文本待定"
+ lost.13.a:0 "等你的好消息了"
+ lost.13.a.t:0 "心满意足地离去"
+ 
+ lost.15.t:0 "暗中观察"
+ lost.15.desc:0 "文本待定"
+ lost.15.a:0 "我很满意，今天[lost_someone.GetHerHis]的酒钱我也包了"
+ lost.15.a.t:0 "太棒了"
+ lost.15.b:0 "我不太满意"
+ lost.15.b.t:0 "假装没看见"
+ 
+ lost.16.t:0 "独自喝酒"
+ lost.16.desc:0 "文本待定"
+ lost.16.a:0 "有点失望"
+ 
+ lost.17.t:0 "友好接触"
+ lost.17.desc:0 "文本待定"
+ lost.17.a:0 "我们或许还能更进一步"
+ lost.17.a.t:0 "尝试勾引[lost_someone.GetFirstNameNoTooltip]"
+ lost.17.a.1.desc:0 "为什么不呢？"
+ lost.17.a.1.t:0 "她将接受"
+ lost.17.a.2.desc:0 "抱歉我对这些没什么兴趣"
+ lost.17.a.2.t:0 "她会拒绝"
+ lost.17.b:0 "来我身边吧"
+ #lost.17.b.t:0 "这次委托你很满意"
+ 
+ lost.18.t:0 "委婉拒绝"
+ lost.18.desc:0 "文本待定"
+ lost.18.a:0 "真是可惜"
+ lost.18.a.t:0 "她拒绝了你"
+ 
+ lost.20.t:0 "春宵一刻"
+ lost.20.desc:0 "文本待定"
+ lost.20.a:0 "[lost_someone.GetFirstNameNoTooltip]的双唇让我欲火焚身"
+ lost.20.b:0 "[lost_someone.GetFirstNameNoTooltip]的蜜穴让我目不转睛"
+ lost.20.c:0 "[lost_someone.GetFirstNameNoTooltip]的后庭是如此的娇嫩"
+ 
+ lost.21.t:0 "侍奉"
+ lost.21.desc:0 ""
+ lost.21.a:0 "还有什么比让[lost_someone.GetFirstNameNoTooltip]吞下我的精液更能令我兴奋的事？"
+ lost.21.b:0 "这么漂亮的脸蛋就是用来亵渎的！"
+ lost.22.t:0 "吞精"
+ lost.22.desc:0 ""
+ lost.22.a:0 "为什么不再来一次呢？（还可坚持[ROOT.Var('rest_cuming_times').GetValue|V0]次）"
+ lost.22.b:0 "我迫不及待地要进入[lost_someone.GetFirstNameNoTooltip]的蜜穴了！（还可坚持[ROOT.Var('rest_cuming_times').GetValue|V0]次）"
+ lost.22.c:0 "我会成为你坚硬的后补，亲爱的[lost_someone.GetFirstNameNoTooltip]（还可坚持[ROOT.Var('rest_cuming_times').GetValue|V0]次）"
+ lost.22.d:0 "一滴都不剩了"
+ 
+ lost.23.t:0 "颜射"
+ lost.23.desc:0 ""
+ lost.23.a:0 "这感觉令我欲罢不能，再来一次吧！（还可坚持[ROOT.Var('rest_cuming_times').GetValue|V0]次）"
+ lost.23.b:0 "我都看见[lost_someone.GetFirstNameNoTooltip]蜜穴流出的淫水了，这就是进攻的信号！（还可坚持[ROOT.Var('rest_cuming_times').GetValue|V0]次）"
+ lost.23.c:0 "[lost_someone.GetFirstNameNoTooltip]的后庭是如此的紧致，包裹感一定会很棒（还可坚持[ROOT.Var('rest_cuming_times').GetValue|V0]次）"
+ lost.23.d:0 "一滴都不剩了"
+ 
+ lost.24.t:0 "蜜穴"
+ lost.24.desc:0 ""
+ lost.24.a:0 "我要灌满她的蜜穴！"
+ lost.24.b:0 "我要在她身体的每一个角落都撒上我的痕迹！"
+ 
+ lost.25.t:0 "灌满"
+ lost.25.desc:0 ""
+ lost.25.a:0 "再来一次吧！（还可坚持[ROOT.Var('rest_cuming_times').GetValue|V0]次）"
+ lost.25.b:0 "被这迷人的双唇吮吸的感觉一定会很棒（还可坚持[ROOT.Var('rest_cuming_times').GetValue|V0]次）"
+ lost.25.c:0 "我对[lost_someone.GetFirstNameNoTooltip]后庭觊觎许久！（还可坚持[ROOT.Var('rest_cuming_times').GetValue|V0]次）"
+ lost.25.d:0 "一滴都不剩了"
+ 
+ lost.26.t:0 "正中靶心"
+ lost.26.desc:0  ""
+ lost.26.a:0 "这感觉太美妙了，再来一次吧！（还可坚持[ROOT.Var('rest_cuming_times').GetValue|V0]次）"
+ lost.26.b:0 "这灵巧的小舌舔舐起来一定很爽！（还可坚持[ROOT.Var('rest_cuming_times').GetValue|V0]次）"
+ lost.26.c:0 "做梦都想让[lost_someone.GetFirstNameNoTooltip]的后庭变成我的形状（还可坚持[ROOT.Var('rest_cuming_times').GetValue|V0]次）"
+ lost.26.d:0 "一滴都不剩了"
+ 
+ lost.27.t:0 "后庭"
+ lost.27.desc:0 ""
+ lost.27.a:0 "这紧致的包裹感让我难以自拔！"
+ lost.27.b:0 "[lost_someone.GetFirstNameNoTooltip]的臀瓣需要一个印章！"
+ 
+ lost.28.t:0 "灌肠"
+ lost.28.desc:0 ""
+ lost.28.a:0 "为什么不再体会一次这绝妙的感觉呢？（还可坚持[ROOT.Var('rest_cuming_times').GetValue|V0]次）"
+ lost.28.b:0 "该喂[lost_someone.GetFirstNameNoTooltip]喝点‘水’了！（还可坚持[ROOT.Var('rest_cuming_times').GetValue|V0]次）"
+ lost.28.c:0 "[lost_someone.GetFirstNameNoTooltip]的蜜穴早就泛滥成灾了，快堵上！（还可坚持[ROOT.Var('rest_cuming_times').GetValue|V0]次）"
+ lost.28.d:0 "一滴都不剩了"
+ 
+ lost.29.t:0 "外射"
+ lost.29.desc:0 ""
+ lost.29.a:0 "这感觉太美妙了，再来一次！（还可坚持[ROOT.Var('rest_cuming_times').GetValue|V0]次）"
+ lost.29.b:0 "试试[lost_someone.GetFirstNameNoTooltip]的小嘴吧（还可坚持[ROOT.Var('rest_cuming_times').GetValue|V0]次）"
+ lost.29.c:0 "该堵住[lost_someone.GetFirstNameNoTooltip]的蜜穴了（还可坚持[ROOT.Var('rest_cuming_times').GetValue|V0]次）"
+ lost.29.d:0 "一滴都不剩了"
+ 
+ lost.30.t:0 "‘性’满意足"
+ lost.30.desc:0 ""
+ losp.30.a:0 "这一切都太美妙了"
+ 
+ 
+ 
+ 
+ 
+ lost..t:0 ""
+ lost..desc:0 ""
+ lost..a:0 ""
+ lost..a.t:0 ""
+ lost..b:0 ""
+ lost..b.t:0 ""
+ lost..c:0 ""
+ lost..c.t:0 ""
+ lost..d:0 ""
+ lost..d.t:0 "" 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

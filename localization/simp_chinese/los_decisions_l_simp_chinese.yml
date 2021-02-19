@@ -1,0 +1,14 @@
+﻿l_simp_chinese:
+ 
+ los_start_decision_t:0 "猎艳传奇"
+ los_start_decision_tooltip:0 "是否准备好开启猎艳人生"
+ los_start_decision_desc:0 "蛊惑人心的最佳方式是什么？宴请偷情？还是乔装勾引？亦或是为了心仪的ta发动一场战争？！\n\n一系列的决议、交互以及隐藏事件都将祝您一臂之力，谱写出独一无二的猎艳传奇。\n\n\n注1：本MOD包含大量R18内容，未成年玩家请立即卸载。坚持使用所造成的一切后果将自行承担。\n\n\n注2：本MOD持续更新。请勿催更。\n\n\n注3：当前角色死亡后，继承人需要满足一定条件后才能重启传奇之路。\n\n\n"
+ los_start_decision_confirm:0 "我准备好了"
+ the_start_of_legend:0 "此刻起，你便是传奇"
+ 
+ los_visit_tavern:0 "小酒馆"
+ los_visit_tavern_tooltip:0 "酒馆永远欢迎每一位客人,但是不能吃霸王餐"
+ los_visit_tavern_desc:0 "还有什么能比去酒馆喝点小酒更能放松的事情呢？去晚了可就没位置了！趁着人还少，赶快出发吧！"
+ los_visit_tavern_confirm:0 "走着！"
+ los_visit_tavern_t: "小酌怡情，酗酒伤身。可不要贪杯哦~"
+ los_founded_someone_t: "去见见老板发现的人才吧！"

@@ -1,0 +1,207 @@
+﻿namespace = loscl
+
+loscl.01 = {
+	type = character_event
+	title = loscl.01.t
+	theme = fabricate_hook_scheme	
+	desc = loscl.01.desc
+	
+	override_background = {
+        event_background = study
+    }
+	
+	option = {
+		name = loscl.01.a
+		trigger_event = loscl.02
+		custom_tooltip = loscl.01.tooltip
+	}
+}
+
+loscl.02 = {
+	hidden = yes
+	
+	immediate = {
+		scope:recipient = {Incestuous
+			if = {
+				limit = { has_trait = adulterer }
+				remove_trait = adulterer
+			}
+			if = {
+				limit = { has_trait = fornicator }
+				remove_trait = fornicator
+			}
+			if = {
+				limit = { has_trait = Incestuous }
+				remove_trait = Incestuous
+			}
+			add_stress = medium_stress_loss 				
+			every_consort = {
+				limit = { is_alive = yes }
+				if = {
+					limit = {
+						has_opinion_modifier = {
+							modifier = unfaithful_spouse_exposed_opinion
+							target = scope:recipient
+						}
+					}
+					remove_opinion = {
+						modifier = unfaithful_spouse_exposed_opinion
+						target = scope:recipient
+					}
+					add_opinion = {
+						modifier = opinion_guilt
+						target = scope:recipient
+					}					
+				}
+				if = {
+					limit = {
+						has_opinion_modifier = {
+							modifier = unfaithful_spouse_discovered_opinion
+							target = scope:recipient
+						}
+					}
+					remove_opinion = {
+						modifier = unfaithful_spouse_discovered_opinion
+						target = scope:recipient
+					}
+					add_opinion = {
+						modifier = opinion_guilt
+						target = scope:recipient
+					}
+				}
+				if = {
+					limit = {
+						has_opinion_modifier = {
+							modifier = slept_with_spouse_discovered_opinion
+							target = scope:actor
+						}
+					}
+					remove_opinion = {
+						modifier = slept_with_spouse_discovered_opinion
+						target = scope:actor
+					}
+					add_opinion = {
+						modifier = opinion_guilt
+						target = scope:recipient
+					}
+				}
+				if = {
+					limit = {
+						has_opinion_modifier = {
+							modifier = slept_with_spouse_exposed_opinion
+							target = scope:actor
+						}
+					}
+					remove_opinion = {
+						modifier = slept_with_spouse_exposed_opinion
+						target = scope:actor
+					}
+					add_opinion = {
+						modifier = opinion_guilt
+						target = scope:recipient
+					}
+				}						
+			}
+		}
+		scope:actor = {
+			if = {
+				limit = { has_trait = adulterer }
+				remove_trait = adulterer
+			}
+			if = {
+				limit = { has_trait = fornicator }
+				remove_trait = fornicator
+			}
+			if = {
+				limit = { has_trait = Incestuous }
+				remove_trait = Incestuous
+			}
+			add = medium_stress_loss 		
+			every_consort = {
+				limit = { is_alive = yes }
+				if = {
+					limit = {
+						has_opinion_modifier = {
+							modifier = unfaithful_spouse_exposed_opinion
+							target = scope:actor
+						}
+					}
+					remove_opinion = {
+						modifier = unfaithful_spouse_exposed_opinion
+						target = scope:actor
+					}
+					add_opinion = {
+						modifier = opinion_guilt
+						target = scope:actor
+					}					
+				}
+				if = {
+					limit = {
+						has_opinion_modifier = {
+							modifier = unfaithful_spouse_discovered_opinion
+							target = scope:actor
+						}
+					}
+					remove_opinion = {
+						modifier = unfaithful_spouse_discovered_opinion
+						target = scope:actor
+					}
+					add_opinion = {
+						modifier = opinion_guilt
+						target = scope:actor
+					}
+				}
+				if = {
+					limit = {
+						has_opinion_modifier = {
+							modifier = slept_with_spouse_discovered_opinion
+							target = scope:recipient
+						}
+					}
+					remove_opinion = {
+						modifier = slept_with_spouse_discovered_opinion
+						target = scope:recipient
+					}
+					add_opinion = {
+						modifier = opinion_guilt
+						target = scope:recipient
+					}
+				}
+				if = {
+					limit = {
+						has_opinion_modifier = {
+							modifier = slept_with_spouse_exposed_opinion
+							target = scope:recipient
+						}
+					}
+					remove_opinion = {
+						modifier = slept_with_spouse_exposed_opinion
+						target = scope:recipient
+					}
+					add_opinion = {
+						modifier = opinion_guilt
+						target = scope:recipient
+					}
+				}				
+			}
+			if = {
+				limit = {
+					scope:recipient = { is_imprisoned = yes }
+				}
+				send_interface_message = {
+				type = event_generic_neutral
+				title = loscl_clarify.m.01.t
+				desc = loscl_clarify.m.01.desc
+				right_icon = scope:recipient
+				scope:recipient = { release_from_prison = yes }
+			}
+			else = {
+				send_interface_message = {
+				type = event_generic_neutral
+				title = loscl_clarify.m.02.t
+				desc = loscl_clarify.m.02.desc
+				right_icon = scope:recipient
+			}
+		}
+	}
+}

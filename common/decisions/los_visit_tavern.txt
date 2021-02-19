@@ -1,0 +1,41 @@
+﻿los_visit_tavern = {
+	picture = "gfx\interface\illustrations\event_scenes\tavern.dds"	
+	major = no
+	title = los_visit_tavern
+	desc = los_visit_tavern_desc
+	
+	#cooldown = { days = 7 }
+	
+	is_shown = {
+		has_character_flag = LOS_START
+		NOT = { has_character_flag = LOS_START }
+		#NOT = { has_character_flag = los_exhausted }
+	}
+	
+	is_valid_showing_failures_only = {		
+		trigger_if = {
+			limit = { NOT = { has_character_flag = los_founded_someone } }
+			gold >= 5
+		}
+		is_commanding_army = no
+		is_imprisoned = no
+		is_at_home = yes
+	}
+	
+	effect = {
+		if = {
+			limit = { has_character_flag = los_founded_someone }
+			root = { add_character_flag = los_exhausted days = 1 }
+			custom_tooltip = los_founded_someone_t
+			trigger_event = lost.15
+		}
+		else = {
+			root = { add_character_flag = los_exhausted days = 1}
+			custom_tooltip = los_visit_tavern_t
+			trigger_event = lost.01
+		}	
+	}
+
+	ai_will_do = 0
+}
+	

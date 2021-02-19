@@ -1,0 +1,6118 @@
+﻿namespace = lost
+
+scripted_trigger lost_02_trigger = {
+	age <= 35
+	age >= 20
+	is_pregnant = no
+	is_totally_healthy = yes
+	is_female = yes
+	is_married = yes
+	is_alive = yes
+	is_imprisoned = no
+	is_commanding_army = no
+	NOT = { is_child_of = scope:actor }
+	NOT = { is_consort_of = scope:actor }
+}
+
+#visit tavern
+lost.01 = {
+	type = character_event
+	title = lost.01.t
+	desc = lost.01.desc
+	theme = party
+	
+	override_background = {
+        event_background = tavern
+    }
+	
+	immediate = { 
+		root = { save_scope_as = actor } 
+		every_vassal_or_below = {
+			if = {
+				limit = {
+					lost_02_trigger = yes
+				}				
+				add_to_temporary_list = potential_female_list
+			}
+			else_if = {
+				limit ={
+					is_female = no
+					is_married = yes
+					is_alive = yes
+				}
+				every_consort = {
+					limit = {
+						lost_02_trigger = yes
+					}
+					add_to_temporary_list = potential_female_list
+				}
+			}
+		}
+		every_neighboring_top_liege_realm_owner = {
+			every_vassal_or_below = {
+				if = {
+					limit = {
+						lost_02_trigger = yes
+					}				
+					add_to_temporary_list = potential_female_list
+				}
+				else_if = {
+					limit = {
+						is_female = no
+						is_alive = yes
+						is_married = yes
+					}
+					every_consort = {
+						limit = {
+							lost_02_trigger = yes
+						}
+						add_to_temporary_list = potential_female_list
+					}
+				}
+			}
+		}		
+		random_in_list = {
+			list = potential_female_list
+			weight = {
+				base = 100
+				compare_modifier = {
+					value = ai_sociability
+				}				
+				modifier = {
+					add = 100
+					has_trait = lustful
+				}
+			}
+			save_scope_as = lost_potential_partner
+		}		
+	}
+	option = {
+		trigger = {
+			NOT = { has_character_flag = los_ask_for_someone }
+		}
+		name = lost.01.a
+		custom_tooltip = lost.01.a.t
+		trigger_event = lost.10
+	}
+	option = {
+		name = lost.01.b
+		custom_tooltip = lost.01.b.t
+		if = {
+			limit = { exists = scope:lost_potential_partner }
+			trigger_event = lost.40
+		}
+		else = { trigger_event = lost.04 }
+	}
+}
+
+#drink comfortably	
+lost.04 = {
+	type = character_event
+	title = lost.04.t
+	desc = lost.04.desc
+	theme = party
+	
+	override_background = {
+        event_background = tavern
+    }
+	
+	immediate = {
+		random_list = {
+			80 = { add_stress = minor_stress_loss }
+			20 = { add_stress = medium_stress_loss }
+		}
+		remove_short_term_gold = 1
+	}
+	option = {
+		name = lost.04.a
+		custom_tooltip = lost.04.a.t
+	}
+}
+
+#diplomacy martial stewardship
+lost.10 = {
+	type = character_event
+	title = lost.10.t
+	desc = lost.10.desc
+	theme = party
+	
+	override_background = {
+        event_background = tavern
+    }
+	
+	option = {
+		name = lost.10.a
+		custom_tooltip = lost.10.a.t
+		add_character_flag = los_want_someone_good_at_diplomacy
+		add_character_flag = los_ask_for_someone
+		trigger_event = lost.12
+	}
+	option = {
+		name = lost.10.b
+		custom_tooltip = lost.10.b.t
+		add_character_flag = los_want_someone_good_at_martial
+		add_character_flag = los_ask_for_someone
+		trigger_event = lost.12
+	}
+	option = {
+		name = lost.10.c
+		custom_tooltip = lost.10.c.t
+		add_character_flag = los_want_someone_good_at_stewardship
+		add_character_flag = los_ask_for_someone
+		trigger_event = lost.12
+	}
+	option = {
+		name = lost.10.d
+		custom_tooltip = lost.10.d.t
+		trigger_event = lost.11
+	}
+}
+
+#intrigue learning beauty
+lost.11 = {
+	type = character_event
+	title = lost.11.t
+	desc = lost.11.desc
+	theme = party
+	
+	override_background = {
+        event_background = tavern
+    }
+	
+	option = {
+		name = lost.11.a
+		custom_tooltip = lost.11.a.t
+		add_character_flag = los_want_someone_good_at_intregue
+		add_character_flag = los_ask_for_someone
+		trigger_event = lost.12
+	}
+	option = {
+		name = lost.11.b
+		custom_tooltip = lost.11.b.t
+		add_character_flag = los_want_someone_good_at_learning
+		add_character_flag = los_ask_for_someone
+		trigger_event = lost.12
+	}
+	option = {
+		name = lost.11.c
+		custom_tooltip = lost.11.c.t
+		add_character_flag = los_want_someone_beautiful
+		add_character_flag = los_ask_for_someone
+		trigger_event = lost.12
+	}
+	option = {
+		name = lost.11.d
+		custom_tooltip = lost.11.d.t
+		trigger_event = lost.04
+	}
+}
+
+#entrust
+lost.12 = {
+	type = character_event
+	title = lost.12.t
+	desc = lost.12.desc
+	theme = party
+	
+	override_background = {
+        event_background = tavern
+    }
+		
+	option = {
+		name = lost.12.a
+		custom_tooltip = lost.12.a.t
+		if = {
+			limit = { has_character_flag = los_want_someone_good_at_diplomacy }
+			remove_character_flag = los_want_someone_good_at_diplomacy
+			add_character_flag = los_want_someone_good_at_diplomacy_1
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_martial }
+			remove_character_flag = los_want_someone_good_at_martial
+			add_character_flag = los_want_someone_good_at_martial_1
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_stewardship }
+			remove_character_flag = los_want_someone_good_at_stewardship
+			add_character_flag = los_want_someone_good_at_stewardship_1
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_intregue }
+			remove_character_flag = los_want_someone_good_at_intregue
+			add_character_flag = los_want_someone_good_at_intregue_1
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_learning }
+			remove_character_flag = los_want_someone_good_at_learning
+			add_character_flag = los_want_someone_good_at_learning_1
+		}
+		else = {
+			limit = { has_character_flag = los_want_someone_beautiful }
+			remove_character_flag = los_want_someone_beautiful
+			add_character_flag = los_want_someone_beautiful_1
+		}
+		remove_short_term_gold = 11
+		trigger_event = { id = losl.10 days = { 30 40 } }
+		trigger_event = lost.13
+	}
+	option = {
+		name = lost.12.b
+		custom_tooltip = lost.12.b.t
+		if = {
+			limit = { has_character_flag = los_want_someone_good_at_diplomacy }
+			remove_character_flag = los_want_someone_good_at_diplomacy
+			add_character_flag = los_want_someone_good_at_diplomacy_2
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_martial }
+			remove_character_flag = los_want_someone_good_at_martial
+			add_character_flag = los_want_someone_good_at_martial_2
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_stewardship }
+			remove_character_flag = los_want_someone_good_at_stewardship
+			add_character_flag = los_want_someone_good_at_stewardship_2
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_intregue }
+			remove_character_flag = los_want_someone_good_at_intregue
+			add_character_flag = los_want_someone_good_at_intregue_2
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_learning }
+			remove_character_flag = los_want_someone_good_at_learning
+			add_character_flag = los_want_someone_good_at_learning_2
+		}
+		else = {
+			limit = { has_character_flag = los_want_someone_beautiful }
+			remove_character_flag = los_want_someone_beautiful
+			add_character_flag = los_want_someone_beautiful_2
+		}
+		remove_short_term_gold = 41		
+		trigger_event = { id = losl.10 days = { 60 70 } }
+		trigger_event = lost.13
+	}
+	option = {
+		name = lost.12.c
+		custom_tooltip = lost.12.c.t
+		if = {
+			limit = { has_character_flag = los_want_someone_good_at_diplomacy }
+			remove_character_flag = los_want_someone_good_at_diplomacy
+			add_character_flag = los_want_someone_good_at_diplomacy_3
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_martial }
+			remove_character_flag = los_want_someone_good_at_martial
+			add_character_flag = los_want_someone_good_at_martial_3
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_stewardship }
+			remove_character_flag = los_want_someone_good_at_stewardship
+			add_character_flag = los_want_someone_good_at_stewardship_3
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_intregue }
+			remove_character_flag = los_want_someone_good_at_intregue
+			add_character_flag = los_want_someone_good_at_intregue_3
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_learning }
+			remove_character_flag = los_want_someone_good_at_learning
+			add_character_flag = los_want_someone_good_at_learning_3
+		}
+		else = {
+			limit = { has_character_flag = los_want_someone_beautiful }
+			remove_character_flag = los_want_someone_beautiful
+			add_character_flag = los_want_someone_beautiful_3
+		}
+		remove_short_term_gold = 101	
+		trigger_event = { id = losl.10 days = { 90 100 } }
+		trigger_event = lost.13
+	}		
+}
+
+#continue drink
+lost.13 = {
+	type = character_event
+	title = lost.13.t
+	desc = lost.13.desc
+	theme = party
+	
+	override_background = {
+        event_background = tavern
+    }
+	
+	immediate = {		
+		random_list = {
+			80 = { add_stress = minor_stress_loss }
+			20 = { add_stress = medium_stress_loss }
+		}
+	}
+	
+	option = {
+		name = lost.13.a
+		custom_tooltip = lost.13.a.t
+	}
+}
+
+#meet someone
+lost.15 = {
+	type = character_event
+	title = lost.15.t
+	desc = lost.15.desc
+	theme = party
+	
+	override_background = {
+        event_background = tavern
+    }
+
+	left_portrait = {
+		character = scope:actor
+		animation = happiness
+	}
+	right_portrait = {
+		character = scope:lost_someone
+	}
+	
+	immediate = {
+		remove_character_flag = los_ask_for_someone
+		root = { save_scope_as = actor }
+		if = {
+			limit = { has_character_flag = los_want_someone_good_at_diplomacy_1 }
+			remove_character_flag = los_want_someone_good_at_diplomacy_1
+			random_list = {
+				90 = { 
+					create_character = {
+						template = los_normal_diplomacy_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 50
+						add_piety = 50
+						add_prestige = 50
+						save_scope_as = lost_someone 
+					}
+				}
+				9 = { 
+					create_character = {
+						template = los_outstanding_diplomacy_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 100
+						add_piety = 100
+						add_prestige = 100
+						save_scope_as = lost_someone 
+					}
+				}
+				1 = { 
+					create_character = {
+						template = los_unique_diplomacy_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 300
+						add_piety = 300
+						add_prestige = 300
+						set_sexuality = homosexual 
+						save_scope_as = lost_someone
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_diplomacy_2 }
+			remove_character_flag = los_want_someone_good_at_diplomacy_2
+			random_list = {
+				30 = { 
+					create_character = {
+						template = los_normal_diplomacy_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 50
+						add_piety = 50
+						add_prestige = 50
+						save_scope_as = lost_someone 
+					}
+				}
+				50 = { 
+					create_character = {
+						template = los_outstanding_diplomacy_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 100
+						add_piety = 100
+						add_prestige = 100
+						save_scope_as = lost_someone 
+					}
+				}
+				20 = { 
+					create_character = {
+						template = los_unique_diplomacy_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 300
+						add_piety = 300
+						add_prestige = 300
+						set_sexuality = homosexual 
+						save_scope_as = lost_someone
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_diplomacy_3 }
+			remove_character_flag = los_want_someone_good_at_diplomacy_3
+			random_list = {
+				10 = { 
+					create_character = {
+						template = los_outstanding_diplomacy_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 100
+						add_piety = 100
+						add_prestige = 100
+						save_scope_as = lost_someone 
+					}
+				}
+				80 = { 
+					create_character = {
+						template = los_unique_diplomacy_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 300
+						add_piety = 300
+						add_prestige = 300
+						set_sexuality = homosexual
+						save_scope_as = lost_someone 
+					}
+				}
+				10 = { 
+					create_character = {
+						template = los_goddess
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 5000
+						add_piety = 5000
+						add_prestige = 5000
+						set_sexuality = asexual
+						save_scope_as = lost_someone
+					}
+				}
+			}
+		} 
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_martial_1 }
+			remove_character_flag = los_want_someone_good_at_martial_1
+			random_list = {
+				90 = { 
+					create_character = {
+						template = los_normal_martial_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 50
+						add_piety = 50
+						add_prestige = 50
+						save_scope_as = lost_someone 
+					}
+				}
+				9 = { 
+					create_character = {
+						template = los_outstanding_martial_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 100
+						add_piety = 100
+						add_prestige = 100
+						save_scope_as = lost_someone 
+					}
+				}
+				1 = { 
+					create_character = {
+						template = los_unique_martial_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 300
+						add_piety = 300
+						add_prestige = 300
+						set_sexuality = homosexual 
+						save_scope_as = lost_someone
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_martial_2 }
+			remove_character_flag = los_want_someone_good_at_martial_2
+			random_list = {
+				30 = { 
+					create_character = {
+						template = los_normal_martial_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 50
+						add_piety = 50
+						add_prestige = 50
+						save_scope_as = lost_someone 
+					}
+				}
+				50 = { 
+					create_character = {
+						template = los_outstanding_martial_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 100
+						add_piety = 100
+						add_prestige = 100
+						save_scope_as = lost_someone 
+					}
+				}
+				20 = { 
+					create_character = {
+						template = los_unique_martial_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 300
+						add_piety = 300
+						add_prestige = 300
+						set_sexuality = homosexual 
+						save_scope_as = lost_someone
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_martial_3 }
+			remove_character_flag = los_want_someone_good_at_martial_3
+			random_list = {
+				10 = { 
+					create_character = {
+						template = los_outstanding_martial_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 100
+						add_piety = 100
+						add_prestige = 100
+						save_scope_as = lost_someone 
+					}
+				}
+				80 = { 
+					create_character = {
+						template = los_unique_martial_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 300
+						add_piety = 300
+						add_prestige = 300
+						set_sexuality = homosexual
+						save_scope_as = lost_someone 
+					}
+				}
+				10 = { 
+					create_character = {
+						template = los_goddess
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 5000
+						add_piety = 5000
+						add_prestige = 5000
+						set_sexuality = asexual
+						save_scope_as = lost_someone
+					}
+				}
+			}
+		} 
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_stewardship_1 }
+			remove_character_flag = los_want_someone_good_at_stewardship_1
+			random_list = {
+				90 = { 
+					create_character = {
+						template = los_normal_stewardship_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 50
+						add_piety = 50
+						add_prestige = 50
+						save_scope_as = lost_someone 
+					}
+				}
+				9 = { 
+					create_character = {
+						template = los_outstanding_stewardship_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 100
+						add_piety = 100
+						add_prestige = 100
+						save_scope_as = lost_someone 
+					}
+				}
+				1 = { 
+					create_character = {
+						template = los_unique_stewardship_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 300
+						add_piety = 300
+						add_prestige = 300
+						set_sexuality = homosexual 
+						save_scope_as = lost_someone
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_stewardship_2 }
+			remove_character_flag = los_want_someone_good_at_stewardship_2
+			random_list = {
+				30 = { 
+					create_character = {
+						template = los_normal_stewardship_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 50
+						add_piety = 50
+						add_prestige = 50
+						save_scope_as = lost_someone 
+					}
+				}
+				50 = { 
+					create_character = {
+						template = los_outstanding_stewardship_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 100
+						add_piety = 100
+						add_prestige = 100
+						save_scope_as = lost_someone 
+					}
+				}
+				20 = { 
+					create_character = {
+						template = los_unique_stewardship_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 300
+						add_piety = 300
+						add_prestige = 300
+						set_sexuality = homosexual 
+						save_scope_as = lost_someone
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_stewardship_3 }
+			remove_character_flag = los_want_someone_good_at_stewardship_3
+			random_list = {
+				10 = { 
+					create_character = {
+						template = los_outstanding_stewardship_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 100
+						add_piety = 100
+						add_prestige = 100
+						save_scope_as = lost_someone 
+					}
+				}
+				80 = { 
+					create_character = {
+						template = los_unique_stewardship_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 300
+						add_piety = 300
+						add_prestige = 300
+						set_sexuality = homosexual
+						save_scope_as = lost_someone 
+					}
+				}
+				10 = { 
+					create_character = {
+						template = los_goddess
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 5000
+						add_piety = 5000
+						add_prestige = 5000
+						set_sexuality = asexual
+						save_scope_as = lost_someone
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_intrigue_1 }
+			remove_character_flag = los_want_someone_good_at_intrigue_1
+			random_list = {
+				90 = { 
+					create_character = {
+						template = los_normal_intrigue_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 50
+						add_piety = 50
+						add_prestige = 50
+						save_scope_as = lost_someone 
+					}
+				}
+				9 = { 
+					create_character = {
+						template = los_outstanding_intrigue_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 100
+						add_piety = 100
+						add_prestige = 100
+						save_scope_as = lost_someone 
+					}
+				}
+				1 = { 
+					create_character = {
+						template = los_unique_intrigue_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 300
+						add_piety = 300
+						add_prestige = 300
+						set_sexuality = homosexual 
+						save_scope_as = lost_someone
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_intrigue_2 }
+			remove_character_flag = los_want_someone_good_at_intrigue_2
+			random_list = {
+				30 = { 
+					create_character = {
+						template = los_normal_intrigue_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 50
+						add_piety = 50
+						add_prestige = 50
+						save_scope_as = lost_someone 
+					}
+				}
+				50 = { 
+					create_character = {
+						template = los_outstanding_intrigue_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 100
+						add_piety = 100
+						add_prestige = 100
+						save_scope_as = lost_someone 
+					}
+				}
+				20 = { 
+					create_character = {
+						template = los_unique_intrigue_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 300
+						add_piety = 300
+						add_prestige = 300
+						set_sexuality = homosexual 
+						save_scope_as = lost_someone
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_intrigue_3 }
+			remove_character_flag = los_want_someone_good_at_intrigue_3
+			random_list = {
+				10 = { 
+					create_character = {
+						template = los_outstanding_intrigue_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 100
+						add_piety = 100
+						add_prestige = 100
+						save_scope_as = lost_someone 
+					}
+				}
+				80 = { 
+					create_character = {
+						template = los_unique_intrigue_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 300
+						add_piety = 300
+						add_prestige = 300
+						set_sexuality = homosexual
+						save_scope_as = lost_someone 
+					}
+				}
+				10 = { 
+					create_character = {
+						template = los_goddess
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 5000
+						add_piety = 5000
+						add_prestige = 5000
+						set_sexuality = asexual
+						save_scope_as = lost_someone
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_learning_1 }
+			remove_character_flag = los_want_someone_good_at_learning_1
+			random_list = {
+				90 = { 
+					create_character = {
+						template = los_normal_learning_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 50
+						add_piety = 50
+						add_prestige = 50
+						save_scope_as = lost_someone 
+					}
+				}
+				9 = { 
+					create_character = {
+						template = los_outstanding_learning_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 100
+						add_piety = 100
+						add_prestige = 100
+						save_scope_as = lost_someone 
+					}
+				}
+				1 = { 
+					create_character = {
+						template = los_unique_learning_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 300
+						add_piety = 300
+						add_prestige = 300
+						set_sexuality = homosexual 
+						save_scope_as = lost_someone
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_learning_2 }
+			remove_character_flag = los_want_someone_good_at_learning_2
+			random_list = {
+				30 = { 
+					create_character = {
+						template = los_normal_learning_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 50
+						add_piety = 50
+						add_prestige = 50
+						save_scope_as = lost_someone 
+					}
+				}
+				50 = { 
+					create_character = {
+						template = los_outstanding_learning_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 100
+						add_piety = 100
+						add_prestige = 100
+						save_scope_as = lost_someone 
+					}
+				}
+				20 = { 
+					create_character = {
+						template = los_unique_learning_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 300
+						add_piety = 300
+						add_prestige = 300
+						set_sexuality = homosexual 
+						save_scope_as = lost_someone
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_good_at_learning_3 }
+			remove_character_flag = los_want_someone_good_at_learning_3
+			random_list = {
+				10 = { 
+					create_character = {
+						template = los_outstanding_learning_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 100
+						add_piety = 100
+						add_prestige = 100
+						save_scope_as = lost_someone 
+					}
+				}
+				80 = { 
+					create_character = {
+						template = los_unique_learning_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 300
+						add_piety = 300
+						add_prestige = 300
+						set_sexuality = homosexual
+						save_scope_as = lost_someone 
+					}
+				}
+				10 = { 
+					create_character = {
+						template = los_goddess
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 5000
+						add_piety = 5000
+						add_prestige = 5000
+						set_sexuality = asexual
+						save_scope_as = lost_someone
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_beautiful_1 }
+			remove_character_flag = los_want_someone_beautiful_1
+			random_list = {
+				90 = { 
+					create_character = {
+						template = los_normal_beauty_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 50
+						add_piety = 50
+						add_prestige = 50
+						save_scope_as = lost_someone 
+					}
+				}
+				9 = { 
+					create_character = {
+						template = los_outstanding_beauty_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 100
+						add_piety = 100
+						add_prestige = 100
+						save_scope_as = lost_someone 
+					}
+				}
+				1 = { 
+					create_character = {
+						template = los_unique_beauty_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 300
+						add_piety = 300
+						add_prestige = 300
+						set_sexuality = heterosexual 
+						save_scope_as = lost_someone
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_beautiful_2 }
+			remove_character_flag = los_want_someone_beautiful_2
+			random_list = {
+				30 = { 
+					create_character = {
+						template = los_normal_beauty_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 50
+						add_piety = 50
+						add_prestige = 50
+						save_scope_as = lost_someone 
+					}
+				}
+				50 = { 
+					create_character = {
+						template = los_outstanding_beauty_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 100
+						add_piety = 100
+						add_prestige = 100
+						save_scope_as = lost_someone 
+					}
+				}
+				20 = { 
+					create_character = {
+						template = los_unique_beauty_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 300
+						add_piety = 300
+						add_prestige = 300
+						set_sexuality = heterosexual 
+						save_scope_as = lost_someone
+					}
+				}
+			}
+		}
+		else_if = {
+			limit = { has_character_flag = los_want_someone_beautiful_3 }
+			remove_character_flag = los_want_someone_beautiful_3
+			random_list = {
+				10 = { 
+					create_character = {
+						template = los_outstanding_beauty_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 100
+						add_piety = 100
+						add_prestige = 100
+						save_scope_as = lost_someone 
+					}
+				}
+				80 = { 
+					create_character = {
+						template = los_unique_beauty_character
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 300
+						add_piety = 300
+						add_prestige = 300
+						set_sexuality = heterosexual
+						save_scope_as = lost_someone 
+					}
+				}
+				10 = { 
+					create_character = {
+						template = los_goddess
+						location = root.capital_province
+						faith = root.faith
+						culture = root.culture
+						add_gold = 5000
+						add_piety = 5000
+						add_prestige = 5000
+						set_sexuality = asexual
+						save_scope_as = lost_someone
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = lost.15.a
+		custom_tooltip = lost.15.a.t
+		trigger_event = lost.17
+	}
+	
+	option = {
+		name = lost.15.b
+		custom_tooltip = lost.15.b.t
+		trigger_event = lost.16
+	}	
+}
+
+#just drink
+lost.16 = { 
+	type = character_event
+	title = lost.16.t
+	desc = lost.16.desc
+	theme = party
+	
+	override_background = {
+        event_background = tavern
+    }
+	left_portrait = {
+		character = scope:actor
+		animation = disappproval
+	}
+	
+	option = {
+		name = lost.16.a
+		random_list = {
+			40 = { add_stress = minor_stress_loss }
+			60 = { }
+		}
+		remove_short_term_gold = 1
+		#custom_tooltip = lost.16.a.t
+	}
+}
+
+#pay a cup of peer
+lost.17 = {
+	type = character_event
+	title = lost.17.t
+	desc = lost.17.desc
+	theme = party
+	
+	override_background = {
+        event_background = tavern
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = happiness
+	}
+	right_portrait = {
+		character = scope:lost_someone
+		animation = happiness
+	}
+	
+	option = {
+		trigger = {
+			scope:lost_someone = { is_female = yes }
+		}
+		name = lost.17.a
+		custom_tooltip = lost.17.a.t
+		remove_short_term_gold = 10
+		random_list = {
+			80 = { 
+				desc = lost.17.a.1.desc
+				show_chance = no
+				custom_tooltip = lost.17.a.1.t
+				trigger_event = lost.19
+				trigger_event = lost.20
+			}
+			20 = { 
+				desc = lost.17.a.2.desc
+				show_chance = no
+				custom_tooltip = lost.17.a.2.t
+				trigger_event = lost.18
+			}
+		}
+	}
+
+	option = {
+		name = lost.17.b
+		#custom_tooltip = lost.17.a.t
+		remove_short_term_gold = 10 
+		scope:actor = { add_courtier = scope:lost_someone }
+	}
+}
+
+#refuse
+lost.18 = {
+	type = character_event
+	title = lost.18.t
+	desc = lost.18.desc
+	theme = party
+	
+	override_background = {
+        event_background = tavern
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = sadness
+	}
+	
+	immediate = {
+		add_stress = medium_stress_gain
+	}
+	
+	option = {
+		name = lost.18.b
+		custom_tooltip = lost.18.a.t
+		remove_short_term_gold = 3 
+		scope:actor = { add_courtier = scope:lost_someone }
+	}
+}
+
+#check
+lost.19 = {
+	hidden = yes
+	
+	immediate = {
+		set_variable = {
+			name = rest_cuming_times
+			value = root.var:los_cuming_times_total
+			days = 1
+		}
+	}
+}
+
+#your bedroom
+lost.20 = {
+	type = character_event
+	title = lost.20.t
+	desc = lost.20.desc
+	theme = love
+	
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = happiness
+	}
+	right_portrait = {
+		character = scope:lost_someone
+		animation = flirtation
+	}
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.20.a
+		trigger_event = lost.21
+		custom_tooltip = LOSP_BLOW_JOB
+	}
+	
+	option = {
+		name = lost.20.b
+		trigger_event = lost.24
+	}
+	
+	option = {
+		name = lost.20.c
+		trigger_event = lost.27
+	}
+}
+	
+
+#bj
+lost.21 = {
+	type = character_event
+	title = lost.21.t
+	theme = love	
+	desc = lost.21.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_someone
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.21.a
+		trigger_event = lost.22
+		show_as_tooltip = {
+			scope:lost_someone = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_unsatisfied
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = lost.21.b
+		trigger_event = lost.23
+		show_as_tooltip = {
+			scope:lost_someone = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_unsatisfied
+				}
+			}
+		}
+	}
+}
+
+#cum in
+lost.22 = {
+	type = character_event
+	title = lost.22.t
+	theme = love	
+	desc = lost.22.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_someone
+		animation = flirtation
+		remove_default_outfit = yes
+	}	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_someone = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_unsatisfied
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	option = {
+		name = lost.22.a
+		trigger_event = lost.21
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	option = {
+		name = lost.22.b
+		trigger_event = lost.24
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	option = {
+		name = lost.22.c
+		trigger_event = lost.27
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}	
+	option = {
+		name = lost.22.d
+		trigger_event = lost.30
+	}
+}
+
+#pull out
+lost.23 = {
+	type = character_event
+	title = lost.23.t
+	theme = love	
+	desc = lost.23.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_someone
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_someone = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_unsatisfied
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.23.a
+		trigger_event = lost.21
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.23.b
+		trigger_event = lost.24
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.23.c
+		trigger_event = lost.27
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.23.d
+		trigger_event = lost.30
+	}
+}
+
+
+#pussy
+lost.24 = {
+	type = character_event
+	title = lost.24.t
+	theme = love	
+	desc = lost.24.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_someone
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.24.a
+		trigger_event = lost.25
+		show_as_tooltip = {
+			scope:lost_someone = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss 
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 50
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = lost.24.b
+		trigger_event = lost.26	
+		show_as_tooltip = {
+			scope:lost_someone = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss 
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 20
+				}
+			}
+		}
+	}
+}
+
+#cum in
+lost.25 = {
+	type = character_event
+	title = lost.25.t
+	theme = love	
+	desc = lost.25.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_someone
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_someone = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss 
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 50
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.25.a
+		trigger_event = lost.24
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.25.b
+		trigger_event = lost.21
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.25.c
+		trigger_event = lost.27
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.25.d
+		trigger_event = lost.30
+	}
+}
+
+
+#pull out
+lost.26 = {
+	type = character_event
+	title = lost.26.t
+	theme = love	
+	desc = lost.26.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_someone
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_someone = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 20
+			}			
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.26.a
+		trigger_event = lost.24
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.26.b
+		trigger_event = lost.21
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.26.c
+		trigger_event = lost.27
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.26.d
+		trigger_event = lost.30
+	}
+}
+
+
+#anal
+lost.27 = {
+	type = character_event
+	title = lost.27.t
+	theme = love	
+	desc = lost.27.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_someone
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.27.a
+		trigger_event = lost.28
+		show_as_tooltip = {
+			scope:lost_someone = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+	
+	option = {
+		name = lost.27.b
+		trigger_event = lost.29
+		show_as_tooltip = {
+			scope:lost_someone = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+}
+
+
+#cum in
+lost.28 = {
+	type = character_event
+	title = lost.28.t
+	theme = love	
+	desc = lost.28.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_someone
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_someone = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.28.a
+		trigger_event = lost.27
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.28.b
+		trigger_event = lost.21
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.28.c
+		trigger_event = lost.24
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.28.d
+		trigger_event = lost.30
+	}
+}
+
+
+#pull out
+lost.29 = {
+	type = character_event
+	title = lost.29.t
+	theme = love	
+	desc = lost.29.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_someone
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_someone = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.29.a
+		trigger_event = lost.27
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.29.b
+		trigger_event = lost.21
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.29.c
+		trigger_event = lost.24
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.29.d
+		trigger_event = lost.30
+	}
+}
+
+
+#over
+lost.30 = {
+	type = character_event
+	title = lost.30.t
+	theme = love	
+	desc = lost.30.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+	}
+	right_portrait = {
+		character = scope:lost_someone
+		animation = love
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"		
+	}
+	
+	option = {
+		name = lost.30.a
+		custom_tooltip = LOSP_HAVE_A_GOOD_NIGHT
+		scope:actor = { add_courtier = scope:lost_someone }
+		if = {
+			limit = {
+				NOT = {
+					scope:lost_someone = {
+						has_relation_lover = scope:actor
+					}
+					scope:lost_someone = {
+						has_relation_soulmate = scope:actor
+					}
+				}
+			}
+			send_interface_message = {
+				type = event_spouse_task_good
+				title = los_gain_heart_t
+				desc = los_gain_heart_desc
+				right_icon = scope:lost_someone
+				scope:lost_someone = {
+					set_relation_lover = scope:actor
+				}
+			}
+		}
+	}
+}
+
+#someone drinks alone
+lost.40 = {
+	type = character_event
+	title = lost.40.t
+	desc = lost.40.desc
+	theme = party
+	
+	override_background = {
+        event_background = tavern
+    }
+	
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = sadness
+	}
+	
+	option = {
+		name = lost.40.a
+		custom_tooltip = lost.40.a.t
+		trigger_event = lost.04
+	}
+	option = {
+		name = lost.40.b
+		remove_short_term_gold = 5
+		custom_tooltip = lost.40.b.t		
+		trigger_event = lost.41
+	}
+}
+
+#console or leave
+lost.41 = {
+	type = character_event
+	title = lost.41.t
+	desc = lost.41.desc
+	theme = party
+	
+	override_background = {
+        event_background = tavern
+    }
+	
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = sadness
+	}
+	
+	option = {
+		name = lost.41.a
+		custom_tooltip = lost.41.a.t
+		trigger_event = { id = losl.20 days = 1 }
+	}
+	option = {
+		name = lost.41.b
+		custom_tooltip = lost.41.b.t		
+		random_list = {
+			100 = {
+				desc = lost.41.b.1.desc
+				show_chance = no
+				custom_tooltip = lost.41.b.1.t
+				trigger_event = lost.42
+			}
+			0 = {
+				desc = lost.41.b.2.desc
+				show_chance = no
+				custom_tooltip = lost.41.b.2.t
+				trigger_event = lost.43
+			}
+		}
+	}
+}
+
+#delight her
+lost.42 = {
+	type = character_event
+	title = lost.42.t
+	desc = lost.42.desc
+	theme = party
+	
+	override_background = {
+        event_background = tavern
+    }
+	left_portrait = {
+		character = scope:actor
+		animation = happiness
+	}	
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+	}
+	option = {
+		name = lost.42.a
+		custom_tooltip = lost.42.a.t
+		trigger_event = lost.48
+	}
+	option = {
+		name = lost.42.b
+		custom_tooltip = lost.42.b.t
+		trigger_event = lost.44
+	}
+}
+
+#no response
+lost.43 = {
+	type = character_event
+	title = lost.43.t
+	desc = lost.43.desc
+	theme = party
+	
+	override_background = {
+        event_background = tavern
+    }
+	
+	right_portrait = {
+		character = scope:actor
+		animation = sadness
+	}
+	
+	option = {
+		name = lost.43.a
+		custom_tooltip = lost.43.a.t
+		add_stress = minor_stress_loss
+		trigger_event = { id = losl.20 days = 1 }
+	}	
+}
+
+#refuse her 
+lost.44 = {
+	type = character_event
+	title = lost.44.t
+	desc = lost.44.desc
+	theme = party
+	
+	override_background = {
+        event_background = tavern
+    }
+	
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = sadness
+	}
+	option = {
+		name = lost.44.a
+		custom_tooltip = lost.44.a.t
+		trigger_event = lost.49
+	}
+}
+
+#promise take her home
+lost.48 = {
+	hidden = yes
+	
+	immediate = {
+		random_list = {
+			70 = { trigger_event = lost.65 }
+			30 = { 
+				trigger_event = lost.50
+				trigger_event = lost.19
+			}
+		}
+	}
+}
+
+#alley
+lost.50 = {
+	type = character_event
+	title = lost.50.t
+	desc = lost.50.desc
+	theme = secret
+	
+	override_background = {
+        event_background = alley_night
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = shock
+	}	
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	option = {
+		name = lost.50.a
+		trigger_event = lost.51
+	}
+	
+	option = {
+		name = lost.50.b
+		trigger_event = lost.54
+	}
+	
+	option = {
+		name = lost.50.c
+		trigger_event = lost.57
+	}
+}
+#bj
+lost.51 = {
+	type = character_event
+	title = lost.51.t
+	theme = love	
+	desc = lost.51.desc	
+
+	override_background = {
+        event_background = alley_night
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.51.a
+		trigger_event = lost.52
+	}
+	
+	option = {
+		name = lost.51.b
+		trigger_event = lost.53
+	}
+}
+
+#cum in
+lost.52 = {
+	type = character_event
+	title = lost.52.t
+	theme = love	
+	desc = lost.52.desc	
+
+	override_background = {
+        event_background = alley_night
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.52.a
+		trigger_event = lost.51
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.52.b
+		trigger_event = lost.54
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.52.c
+		trigger_event = lost.57
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.52.d
+		trigger_event = lost.60
+	}
+}
+
+#pull out
+lost.53 = {
+	type = character_event
+	title = lost.53.t
+	theme = love	
+	desc = lost.53.desc	
+
+	override_background = {
+        event_background = alley_night
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.53.a
+		trigger_event = lost.51
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.53.b
+		trigger_event = lost.54
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.53.c
+		trigger_event = lost.57
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.53.d
+		trigger_event = lost.60
+	}
+}
+
+#pussy
+lost.54 = {
+	type = character_event
+	title = lost.54.t
+	theme = love	
+	desc = lost.54.desc	
+
+	override_background = {
+        event_background = alley_night
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.54.a
+		trigger_event = lost.55
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss 
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 50
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = lost.54.b
+		trigger_event = lost.56	
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss 
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 20
+				}
+			}
+		}
+	}
+}
+
+#cum in
+lost.55 = {
+	type = character_event
+	title = lost.55.t
+	theme = love	
+	desc = lost.55.desc	
+
+	override_background = {
+        event_background = alley_night
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss 
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 50
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.55.a
+		trigger_event = lost.54
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.55.b
+		trigger_event = lost.51
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.55.c
+		trigger_event = lost.57
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.55.d
+		trigger_event = lost.60
+	}
+}
+
+#pull out
+lost.56 = {
+	type = character_event
+	title = lost.56.t
+	theme = love	
+	desc = lost.56.desc	
+
+	override_background = {
+        event_background = alley_night
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 20
+			}			
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.56.a
+		trigger_event = lost.54
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.56.b
+		trigger_event = lost.51
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.56.c
+		trigger_event = lost.57
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.56.d
+		trigger_event = lost.60
+	}
+}
+
+#anal
+lost.57 = {
+	type = character_event
+	title = lost.57.t
+	theme = love	
+	desc = lost.57.desc	
+
+	override_background = {
+        event_background = alley_night
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.57.a
+		trigger_event = lost.58
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+	
+	option = {
+		name = lost.57.b
+		trigger_event = lost.59
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+}
+
+#cum in
+lost.58 = {
+	type = character_event
+	title = lost.58.t
+	theme = love	
+	desc = lost.58.desc	
+
+	override_background = {
+        event_background = alley_night
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.58.a
+		trigger_event = lost.57
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.58.b
+		trigger_event = lost.51
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.58.c
+		trigger_event = lost.54
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.58.d
+		trigger_event = lost.60
+	}
+}
+
+#pull out
+lost.59 = {
+	type = character_event
+	title = lost.59.t
+	theme = love	
+	desc = lost.59.desc	
+
+	override_background = {
+        event_background = alley_night
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.59.a
+		trigger_event = lost.57
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.59.b
+		trigger_event = lost.51
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.59.c
+		trigger_event = lost.54
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.59.d
+		trigger_event = lost.60
+	}
+}
+
+#over
+lost.60 = {
+	type = character_event
+	title = lost.60.t
+	theme = love	
+	desc = lost.60.desc	
+
+	override_background = {
+        event_background = alley_night
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"		
+	}
+	
+	option = {
+		name = lost.60.a
+		custom_tooltip = LOSP_HAVE_A_GOOD_NIGHT
+		if = {
+			limit = {
+				NOT = {
+					scope:lost_potential_partner = {
+						has_relation_lover = scope:actor
+					}
+					scope:lost_potential_partner = {
+						has_relation_soulmate = scope:actor
+					}
+				}
+			}
+			send_interface_message = {
+				type = event_spouse_task_good
+				title = los_gain_heart_t
+				desc = los_gain_heart_desc
+				right_icon = scope:lost_potential_partner
+				scope:lost_potential_partner = {
+					set_relation_lover = scope:actor
+				}
+			}
+		}
+	}
+}
+
+#near the gate
+lost.65 = {
+	hidden = yes
+	
+	immediate = {
+		scope:los_lost_potential_partner = {
+			if = {
+				limit = {
+					any_spouse = {
+						is_alive = yes
+						is_at_same_location = scope:los_lost_potential_partner
+					}
+				}
+				random_spouse = {
+					limit = {
+						is_alive = yes
+						is_at_same_location = scope:los_lost_potential_partner
+					}
+					save_scope_as = lost_husband
+				}
+				scope:actor = { trigger_event = lost.66 }
+			}
+			else = {
+				scope:actor = { trigger_event = lost.67 }
+			}
+		}
+	}
+}
+
+#husband thanks to you
+lost.66 = {
+	type = character_event
+	title = lost.66.t
+	desc = lost.66.desc
+	theme = friendly
+	
+	left_portrait = {
+		character = scope:actor
+	}	
+	right_portrait = {
+		character = scope:lost_husband
+		animation = happiness
+	}
+	lower_left_portrait = {
+		character = scope:lost_potential_partner
+		animation = stress
+	}
+	
+	option = {
+		name = lost.66.a
+		custom_tooltip = lost.66.a.t
+		scope:lost_husband = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_take_my_wife_home
+			}
+		}
+	}
+}
+
+#seduce her
+lost.67 = {
+	type = character_event
+	title = lost.67.t
+	desc = lost.67.desc
+	theme = seduction
+	
+	left_portrait = {
+		character = scope:actor
+		animation = ecstasy
+	}	
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+	}
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = { #your lover never refuse you
+		trigger = {
+			scope:lost_potential_partner = {
+				has_relation_lover = scope:actor
+			}
+		}
+		name = lost.67.c
+		custom_tooltip = LOS_NEVER_REFUSE
+		trigger_event = lost.90
+	}
+	
+	option = { #sedece
+		trigger = {
+			NOT = {
+				scope:lost_potential_partner = {
+					has_relation_lover = scope:actor
+				}
+			}
+		}		
+		name = lost.67.a
+		random_list = {			
+			80 = { 
+				desc = LOSP_ACCEPT_SEDUCTION
+				show_chance = no
+				custom_tooltip = LOSP_ACCEPT_SEDUCTION.a
+				trigger_event = lost.70
+				trigger_event = lost.19
+			}
+			20 = { 
+				desc = LOSP_REFUSE_SEDUCTION
+				show_chance = no
+				custom_tooltip = LOSP_REFUSE_SEDUCTION.a
+				trigger_event = lost.68
+			}
+		}
+	}
+	
+	option = { #go back to drink
+		name = lost.67.b
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_take_me_home
+			}
+		}
+	}
+}
+
+#refuse
+lost.68 = {
+	type = character_event
+	title = lost.68.t
+	desc = lost.68.desc
+	theme = unfriendly
+	
+	left_portrait = {
+		character = scope:actor
+		animation = sadness
+	}	
+	right_portrait = {
+		character = scope:lost_potential_partner
+	}
+	
+	option = { #go back home
+		name = lost.68.a
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_take_me_home
+			}
+		}
+	}
+}
+
+#accept
+lost.70 = {
+	type = character_event
+	title = lost.70.t
+	desc = lost.70.desc
+	theme = love
+	
+	override_background = {
+		event_background = bedchamber
+    }
+	left_portrait = {
+		character = scope:actor
+		animation = ecstasy
+	}	
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+	}
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.70.a
+		trigger_event = lost.71
+		custom_tooltip = LOSP_BLOW_JOB
+	}
+	
+	option = {
+		name = lost.70.b
+		trigger_event = lost.74
+	}
+	
+	option = {
+		name = lost.70.c
+		trigger_event = lost.77
+	}
+}
+
+#bj
+lost.71 = {
+	type = character_event
+	title = lost.71.t
+	theme = love	
+	desc = lost.71.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.71.a
+		trigger_event = lost.72
+	}
+	
+	option = {
+		name = lost.71.b
+		trigger_event = lost.73
+	}
+}
+
+#cum in
+lost.72 = {
+	type = character_event
+	title = lost.72.t
+	theme = love	
+	desc = lost.72.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.72.a
+		trigger_event = lost.71
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.72.b
+		trigger_event = lost.74
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.72.c
+		trigger_event = lost.77
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.72.d
+		trigger_event = lost.80
+	}
+}
+
+#pull out
+lost.73 = {
+	type = character_event
+	title = lost.73.t
+	theme = love	
+	desc = lost.73.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.73.a
+		trigger_event = lost.71
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.73.b
+		trigger_event = lost.74
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.73.c
+		trigger_event = lost.77
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.73.d
+		trigger_event = lost.80
+	}
+}
+
+#pussy
+lost.74 = {
+	type = character_event
+	title = lost.74.t
+	theme = love	
+	desc = lost.74.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.74.a
+		trigger_event = lost.75
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss 
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 50
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = lost.74.b
+		trigger_event = lost.76	
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss 
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 20
+				}
+			}
+		}
+	}
+}
+
+#cum in
+lost.75 = {
+	type = character_event
+	title = lost.75.t
+	theme = love	
+	desc = lost.75.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss 
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 50
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.75.a
+		trigger_event = lost.74
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.75.b
+		trigger_event = lost.71
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.75.c
+		trigger_event = lost.77
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.75.d
+		trigger_event = lost.80
+	}
+}
+
+#pull out
+lost.76 = {
+	type = character_event
+	title = lost.76.t
+	theme = love	
+	desc = lost.76.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 20
+			}			
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.76.a
+		trigger_event = lost.74
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.76.b
+		trigger_event = lost.71
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.76.c
+		trigger_event = lost.77
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.76.d
+		trigger_event = lost.80
+	}
+}
+
+#anal
+lost.77 = {
+	type = character_event
+	title = lost.77.t
+	theme = love	
+	desc = lost.77.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.77.a
+		trigger_event = lost.78
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+	
+	option = {
+		name = lost.77.b
+		trigger_event = lost.79
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+}
+
+#cum in
+lost.78 = {
+	type = character_event
+	title = lost.78.t
+	theme = love	
+	desc = lost.78.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.78.a
+		trigger_event = lost.77
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.78.b
+		trigger_event = lost.71
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.78.c
+		trigger_event = lost.74
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.78.d
+		trigger_event = lost.80
+	}
+}
+
+#pull out
+lost.79 = {
+	type = character_event
+	title = lost.79.t
+	theme = love	
+	desc = lost.79.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.79.a
+		trigger_event = lost.77
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.79.b
+		trigger_event = lost.71
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.79.c
+		trigger_event = lost.74
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.79.d
+		trigger_event = lost.80
+	}
+}
+
+#over
+lost.80 = {
+	type = character_event
+	title = lost.80.t
+	theme = love	
+	desc = lost.80.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"		
+	}
+	
+	option = {
+		name = lost.80.a
+		custom_tooltip = LOSP_HAVE_A_GOOD_NIGHT
+		if = {
+			limit = {
+				NOT = {
+					scope:lost_potential_partner = {
+						has_relation_lover = scope:actor
+					}
+					scope:lost_potential_partner = {
+						has_relation_soulmate = scope:actor
+					}
+				}
+			}
+			send_interface_message = {
+				type = event_spouse_task_good
+				title = los_gain_heart_t
+				desc = los_gain_heart_desc
+				right_icon = scope:lost_potential_partner
+				scope:lost_potential_partner = {
+					set_relation_lover = scope:actor
+				}
+			}
+		}
+	}
+}
+
+#corridor
+lost.90 = {	
+	type = character_event
+	title = lost.90.t
+	desc = lost.90.desc
+	theme = love
+	
+	override_background = {
+		event_background = corridor_night
+    }
+	left_portrait = {
+		character = scope:actor
+		animation = love
+	}	
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+	}
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.90.a
+		trigger_event = lost.91
+	}
+	
+	option = {
+		name = lost.90.b
+		trigger_event = lost.92
+	}
+	
+	option = {
+		name = lost.90.c
+		trigger_event = lost.93
+	}
+}
+
+#pick up
+lost.91 = {
+	type = character_event
+	title = lost.91.t
+	desc = lost.91.desc
+	theme = love
+	
+	override_background = {
+		event_background = corridor_night
+    }
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}	
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.91.a
+		trigger_event = lost.94
+	}
+	
+	option = {
+		name = lost.91.b
+		trigger_event = lost.95
+	}
+}
+
+#doggy
+lost.92 = {
+	type = character_event
+	title = lost.92.t
+	desc = lost.92.desc
+	theme = love
+	
+	override_background = {
+		event_background = corridor_night
+    }
+	left_portrait = {
+		character = scope:actor
+		animation = ecstasy
+		remove_default_outfit = yes
+	}	
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.92.a
+		trigger_event = lost.100
+	}
+	
+	option = {
+		name = lost.92.b
+		trigger_event = lost.103
+	}
+}
+
+#bedroom
+lost.93 = {
+	type = character_event
+	title = lost.93.t
+	desc = lost.93.desc
+	theme = love
+	
+	override_background = {
+		event_background = bedchamber
+    }
+	left_portrait = {
+		character = scope:actor
+		animation = ecstasy
+		remove_default_outfit = yes		
+	}	
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = flirtation
+		remove_default_outfit = yes
+	}
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	option = {
+		name = lost.93.a
+		trigger_event = lost.111
+		custom_tooltip = LOSP_BLOW_JOB
+	}
+	
+	option = {
+		name = lost.93.b
+		trigger_event = lost.114
+	}
+	
+	option = {
+		name = lost.93.c
+		trigger_event = lost.117
+	}
+}
+
+#study room
+lost.94 = {
+	type = character_event
+	title = lost.94.t
+	desc = lost.94.desc
+	theme = love
+	
+	override_background = {
+		event_background = study
+    }
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}	
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	option = {
+		name = lost.94.a
+		trigger_event = lost.121
+		custom_tooltip = LOSP_BLOW_JOB
+	}
+	
+	option = {
+		name = lost.94.b
+		trigger_event = lost.124
+	}
+	
+	option = {
+		name = lost.94.c
+		trigger_event = lost.127
+	}	
+}
+
+#dungeon
+lost.95 = {
+	type = character_event
+	title = lost.91.t
+	desc = lost.91.desc
+	theme = love
+	
+	override_background = {
+		event_background = dungeon
+    }
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}	
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = prisondungeon
+		remove_default_outfit = yes
+	}
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	option = {
+		name = lost.95.a
+		trigger_event = lost.131
+		custom_tooltip = LOSP_BLOW_JOB
+	}
+	
+	option = {
+		name = lost.95.b
+		trigger_event = lost.134
+	}
+	
+	option = {
+		name = lost.95.c
+		trigger_event = lost.137
+	}
+}
+
+#pussy
+lost.100 = {
+	type = character_event
+	title = lost.100.t
+	theme = love	
+	desc = lost.100.desc	
+
+	override_background = {
+        event_background = corridor_night
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.100.a
+		trigger_event = lost.101
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss 
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 50
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = lost.100.b
+		trigger_event = lost.102	
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss 
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 20
+				}
+			}
+		}
+	}
+}
+
+#cum in
+lost.101 = {
+	type = character_event
+	title = lost.101.t
+	theme = love	
+	desc = lost.101.desc	
+
+	override_background = {
+        event_background = corridor_night
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss 
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 50
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.101.a
+		trigger_event = lost.100
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.101.b
+		trigger_event = lost.103
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.101.c
+		trigger_event = lost.106
+	}
+}
+
+#pull out
+lost.102 = {
+	type = character_event
+	title = lost.102.t
+	theme = love	
+	desc = lost.102.desc	
+
+	override_background = {
+        event_background = corridor_night
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 20
+			}			
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.102.a
+		trigger_event = lost.100
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.102.b
+		trigger_event = lost.103
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.102.c
+		trigger_event = lost.106
+	}
+}
+
+#anal
+lost.103 = {
+	type = character_event
+	title = lost.103.t
+	theme = love	
+	desc = lost.103.desc	
+
+	override_background = {
+        event_background = corridor_night
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.103.a
+		trigger_event = lost.104
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+	
+	option = {
+		name = lost.103.b
+		trigger_event = lost.105
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+}
+
+#cum in
+lost.104 = {
+	type = character_event
+	title = lost.104.t
+	theme = love	
+	desc = lost.104.desc	
+
+	override_background = {
+        event_background = corridor_night
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.104.a
+		trigger_event = lost.103
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.104.b
+		trigger_event = lost.100
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.104.c
+		trigger_event = lost.106
+	}
+}
+
+#pull out
+lost.105 = {
+	type = character_event
+	title = lost.105.t
+	theme = love	
+	desc = lost.105.desc	
+
+	override_background = {
+        event_background = corridor_night
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.105.a
+		trigger_event = lost.103
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.105.b
+		trigger_event = lost.100
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.105.c
+		trigger_event = lost.106
+	}
+}
+
+#over
+lost.106 = {
+	type = character_event
+	title = lost.106.t
+	theme = love	
+	desc = lost.106.desc	
+
+	override_background = {
+        event_background = corridor_night
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"		
+	}
+	
+	option = {
+		name = lost.106.a
+		custom_tooltip = LOSP_HAVE_A_GOOD_NIGHT
+		if = {
+			limit = {
+				NOT = {
+					scope:lost_potential_partner = {
+						has_relation_lover = scope:actor
+					}
+					scope:lost_potential_partner = {
+						has_relation_soulmate = scope:actor
+					}
+				}
+			}
+			send_interface_message = {
+				type = event_spouse_task_good
+				title = los_gain_heart_t
+				desc = los_gain_heart_desc
+				right_icon = scope:lost_potential_partner
+				scope:lost_potential_partner = {
+					set_relation_lover = scope:actor
+				}
+			}
+		}
+	}
+}
+
+#bj
+lost.111 = {
+	type = character_event
+	title = lost.111.t
+	theme = love	
+	desc = lost.111.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.111.a
+		trigger_event = lost.112
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_unsatisfied
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = lost.111.b
+		trigger_event = lost.113
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_unsatisfied
+				}
+			}
+		}
+	}
+}
+
+#cum in
+lost.112 = {
+	type = character_event
+	title = lost.112.t
+	theme = love	
+	desc = lost.112.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_unsatisfied
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.112.a
+		trigger_event = lost.111
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.112.b
+		trigger_event = lost.114
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.112.c
+		trigger_event = lost.117
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.112.d
+		trigger_event = lost.120
+	}
+}
+
+#pull out
+lost.113 = {
+	type = character_event
+	title = lost.113.t
+	theme = love	
+	desc = lost.113.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_unsatisfied
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.113.a
+		trigger_event = lost.111
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.113.b
+		trigger_event = lost.114
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.113.c
+		trigger_event = lost.117
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.113.d
+		trigger_event = lost.120
+	}
+}
+
+#pussy
+lost.114 = {
+	type = character_event
+	title = lost.114.t
+	theme = love	
+	desc = lost.114.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.114.a
+		trigger_event = lost.115
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss 
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 50
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = lost.114.b
+		trigger_event = lost.116	
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss 
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 20
+				}
+			}
+		}
+	}
+}
+
+#cum in
+lost.115 = {
+	type = character_event
+	title = lost.115.t
+	theme = love	
+	desc = lost.115.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss 
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 50
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.115.a
+		trigger_event = lost.114
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.115.b
+		trigger_event = lost.111
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.115.c
+		trigger_event = lost.117
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.115.d
+		trigger_event = lost.120
+	}
+}
+
+#pull out
+lost.116 = {
+	type = character_event
+	title = lost.116.t
+	theme = love	
+	desc = lost.116.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 20
+			}			
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.116.a
+		trigger_event = lost.114
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.116.b
+		trigger_event = lost.111
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.116.c
+		trigger_event = lost.117
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.116.d
+		trigger_event = lost.120
+	}
+}
+
+#anal
+lost.117 = {
+	type = character_event
+	title = lost.117.t
+	theme = love	
+	desc = lost.117.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.117.a
+		trigger_event = lost.118
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+	
+	option = {
+		name = lost.117.b
+		trigger_event = lost.119
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+}
+
+#cum in
+lost.118 = {
+	type = character_event
+	title = lost.118.t
+	theme = love	
+	desc = lost.118.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.118.a
+		trigger_event = lost.117
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.118.b
+		trigger_event = lost.111
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.118.c
+		trigger_event = lost.114
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.118.d
+		trigger_event = lost.120
+	}
+}
+
+#pull out
+lost.119 = {
+	type = character_event
+	title = lost.119.t
+	theme = love	
+	desc = lost.119.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.119.a
+		trigger_event = lost.117
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.119.b
+		trigger_event = lost.111
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.119.c
+		trigger_event = lost.114
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.119.d
+		trigger_event = lost.120
+	}
+}
+
+#over
+lost.120 = {
+	type = character_event
+	title = lost.120.t
+	theme = love	
+	desc = lost.120.desc	
+
+	override_background = {
+        event_background = bedchamber
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"		
+	}
+	
+	option = {
+		name = lost.120.a
+		custom_tooltip = LOSP_HAVE_A_GOOD_NIGHT
+		if = {
+			limit = {
+				NOT = {
+					scope:lost_potential_partner = {
+						has_relation_lover = scope:actor
+					}
+					scope:lost_potential_partner = {
+						has_relation_soulmate = scope:actor
+					}
+				}
+			}
+			send_interface_message = {
+				type = event_spouse_task_good
+				title = los_gain_heart_t
+				desc = los_gain_heart_desc
+				right_icon = scope:lost_potential_partner
+				scope:lost_potential_partner = {
+					set_relation_lover = scope:actor
+				}
+			}
+		}
+	}
+}
+
+#bj
+lost.121 = {
+	type = character_event
+	title = lost.121.t
+	theme = love	
+	desc = lost.121.desc	
+
+	override_background = {
+        event_background = study
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.121.a
+		trigger_event = lost.122
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_unsatisfied
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = lost.121.b
+		trigger_event = lost.123
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_unsatisfied
+				}
+			}
+		}
+	}
+}
+
+#cum in
+lost.122 = {
+	type = character_event
+	title = lost.122.t
+	theme = love	
+	desc = lost.122.desc	
+
+	override_background = {
+        event_background = study
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_unsatisfied
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.122.a
+		trigger_event = lost.121
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.122.b
+		trigger_event = lost.124
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.122.c
+		trigger_event = lost.127
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.122.d
+		trigger_event = lost.130
+	}
+}
+
+#pull out
+lost.123 = {
+	type = character_event
+	title = lost.123.t
+	theme = love	
+	desc = lost.123.desc	
+
+	override_background = {
+        event_background = study
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_unsatisfied
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.123.a
+		trigger_event = lost.121
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.123.b
+		trigger_event = lost.124
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.123.c
+		trigger_event = lost.127
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.123.d
+		trigger_event = lost.130
+	}
+}
+
+#pussy
+lost.124 = {
+	type = character_event
+	title = lost.124.t
+	theme = love	
+	desc = lost.124.desc	
+
+	override_background = {
+        event_background = study
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.124.a
+		trigger_event = lost.125
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss 
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 50
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = lost.124.b
+		trigger_event = lost.126	
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss 
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 20
+				}
+			}
+		}
+	}
+}
+
+#cum in
+lost.125 = {
+	type = character_event
+	title = lost.125.t
+	theme = love	
+	desc = lost.125.desc	
+
+	override_background = {
+        event_background = study
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss 
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 50
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.125.a
+		trigger_event = lost.124
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.125.b
+		trigger_event = lost.121
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.125.c
+		trigger_event = lost.127
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.125.d
+		trigger_event = lost.130
+	}
+}
+
+#pull out
+lost.126 = {
+	type = character_event
+	title = lost.126.t
+	theme = love	
+	desc = lost.126.desc	
+
+	override_background = {
+        event_background = study
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 20
+			}			
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.126.a
+		trigger_event = lost.124
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.126.b
+		trigger_event = lost.121
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.126.c
+		trigger_event = lost.127
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.126.d
+		trigger_event = lost.130
+	}
+}
+
+#anal
+lost.127 = {
+	type = character_event
+	title = lost.127.t
+	theme = love	
+	desc = lost.127.desc	
+
+	override_background = {
+        event_background = study
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.127.a
+		trigger_event = lost.128
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+	
+	option = {
+		name = lost.127.b
+		trigger_event = lost.129
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+}
+
+#cum in
+lost.128 = {
+	type = character_event
+	title = lost.128.t
+	theme = love	
+	desc = lost.128.desc	
+
+	override_background = {
+        event_background = study
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.128.a
+		trigger_event = lost.127
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.128.b
+		trigger_event = lost.121
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.128.c
+		trigger_event = lost.124
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.128.d
+		trigger_event = lost.130
+	}
+}
+
+#pull out
+lost.129 = {
+	type = character_event
+	title = lost.129.t
+	theme = love	
+	desc = lost.129.desc	
+
+	override_background = {
+        event_background = study
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.129.a
+		trigger_event = lost.127
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.129.b
+		trigger_event = lost.121
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.129.c
+		trigger_event = lost.124
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.129.d
+		trigger_event = lost.130
+	}
+}
+
+#over
+lost.130 = {
+	type = character_event
+	title = lost.130.t
+	theme = love	
+	desc = lost.130.desc	
+
+	override_background = {
+        event_background = study
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"		
+	}
+	
+	option = {
+		name = lost.130.a
+		custom_tooltip = LOSP_HAVE_A_GOOD_NIGHT
+		if = {
+			limit = {
+				NOT = {
+					scope:lost_potential_partner = {
+						has_relation_lover = scope:actor
+					}
+					scope:lost_potential_partner = {
+						has_relation_soulmate = scope:actor
+					}
+				}
+			}
+			send_interface_message = {
+				type = event_spouse_task_good
+				title = los_gain_heart_t
+				desc = los_gain_heart_desc
+				right_icon = scope:lost_potential_partner
+				scope:lost_potential_partner = {
+					set_relation_lover = scope:actor
+				}
+			}
+		}
+	}
+}
+
+#bj
+lost.131 = {
+	type = character_event
+	title = lost.131.t
+	theme = love	
+	desc = lost.131.desc	
+
+	override_background = {
+        event_background = dungeon
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = prisondungeon
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.131.a
+		trigger_event = lost.132
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_unsatisfied
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = lost.131.b
+		trigger_event = lost.133
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_unsatisfied
+				}
+			}
+		}
+	}
+}
+
+#cum in
+lost.132 = {
+	type = character_event
+	title = lost.132.t
+	theme = love	
+	desc = lost.132.desc	
+
+	override_background = {
+        event_background = dungeon
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = prisondungeon
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_unsatisfied
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.132.a
+		trigger_event = lost.131
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.132.b
+		trigger_event = lost.134
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.132.c
+		trigger_event = lost.137
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.132.d
+		trigger_event = lost.140
+	}
+}
+
+#pull out
+lost.133 = {
+	type = character_event
+	title = lost.133.t
+	theme = love	
+	desc = lost.133.desc	
+
+	override_background = {
+        event_background = dungeon
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = prisondungeon
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_unsatisfied
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.133.a
+		trigger_event = lost.131
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.133.b
+		trigger_event = lost.134
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.133.c
+		trigger_event = lost.137
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.133.d
+		trigger_event = lost.140
+	}
+}
+
+#pussy
+lost.134 = {
+	type = character_event
+	title = lost.134.t
+	theme = love	
+	desc = lost.134.desc	
+
+	override_background = {
+        event_background = dungeon
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = prisondungeon
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.134.a
+		trigger_event = lost.135
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss 
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 50
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = lost.134.b
+		trigger_event = lost.136	
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss 
+				had_sex_with_effect = {
+					CHARACTER = scope:actor
+					PREGNANCY_CHANCE = 20
+				}
+			}
+		}
+	}
+}
+
+#cum in
+lost.135 = {
+	type = character_event
+	title = lost.135.t
+	theme = love	
+	desc = lost.135.desc	
+
+	override_background = {
+        event_background = dungeon
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = prisondungeon
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss 
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 50
+			}
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.135.a
+		trigger_event = lost.134
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.135.b
+		trigger_event = lost.131
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.135.c
+		trigger_event = lost.137
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.135.d
+		trigger_event = lost.140
+	}
+}
+
+#pull out
+lost.136 = {
+	type = character_event
+	title = lost.136.t
+	theme = love	
+	desc = lost.136.desc	
+
+	override_background = {
+        event_background = dungeon
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = prisondungeon
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+			had_sex_with_effect = {
+				CHARACTER = scope:actor
+				PREGNANCY_CHANCE = 20
+			}			
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.136.a
+		trigger_event = lost.134
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.136.b
+		trigger_event = lost.131
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.136.c
+		trigger_event = lost.137
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.136.d
+		trigger_event = lost.140
+	}
+}
+
+#anal
+lost.137 = {
+	type = character_event
+	title = lost.137.t
+	theme = love	
+	desc = lost.137.desc	
+
+	override_background = {
+        event_background = dungeon
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = prisondungeon
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+	}
+	
+	option = {
+		name = lost.137.a
+		trigger_event = lost.138
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+	
+	option = {
+		name = lost.137.b
+		trigger_event = lost.139
+		show_as_tooltip = {
+			scope:lost_potential_partner = {
+				add_opinion = {
+					target = scope:actor
+					modifier = opinion_sex_satisfied
+				}
+				add_stress = medium_stress_loss
+			}
+		}
+	}
+}
+
+#cum in
+lost.138 = {
+	type = character_event
+	title = lost.138.t
+	theme = love	
+	desc = lost.138.desc	
+
+	override_background = {
+        event_background = dungeon
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = prisondungeon
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.138.a
+		trigger_event = lost.137
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.138.b
+		trigger_event = lost.131
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.138.c
+		trigger_event = lost.134
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.138.d
+		trigger_event = lost.140
+	}
+}
+
+#pull out
+lost.139 = {
+	type = character_event
+	title = lost.139.t
+	theme = love	
+	desc = lost.139.desc	
+
+	override_background = {
+        event_background = dungeon
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+		remove_default_outfit = yes
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = prisondungeon
+		remove_default_outfit = yes
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"
+		scope:lost_potential_partner = {
+			add_opinion = {
+				target = scope:actor
+				modifier = opinion_sex_satisfied
+			}
+			add_stress = medium_stress_loss
+		}
+		change_variable = {
+			name = rest_cuming_times
+			add = -1
+		}
+	}
+	
+	option = {
+		name = lost.139.a
+		trigger_event = lost.137
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.139.b
+		trigger_event = lost.131
+		custom_tooltip = LOSP_BLOW_JOB
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.139.c
+		trigger_event = lost.134
+		trigger = {
+			var:rest_cuming_times >= 1 
+		}
+	}
+	
+	option = {
+		name = lost.139.d
+		trigger_event = lost.140
+	}
+}
+
+#over
+lost.140 = {
+	type = character_event
+	title = lost.140.t
+	theme = love	
+	desc = lost.140.desc	
+
+	override_background = {
+        event_background = dungeon
+    }
+	
+	left_portrait = {
+		character = scope:actor
+		animation = love
+	}
+	right_portrait = {
+		character = scope:lost_potential_partner
+		animation = love
+	}			
+	
+	immediate = {
+		play_music_cue = "mx_cue_seduction"		
+	}
+	
+	option = {
+		name = lost.140.a
+		custom_tooltip = LOSP_HAVE_A_GOOD_NIGHT
+		if = {
+			limit = {
+				NOT = {
+					scope:lost_potential_partner = {
+						has_relation_lover = scope:actor
+					}
+					scope:lost_potential_partner = {
+						has_relation_soulmate = scope:actor
+					}
+				}
+			}
+			send_interface_message = {
+				type = event_spouse_task_good
+				title = los_gain_heart_t
+				desc = los_gain_heart_desc
+				right_icon = scope:lost_potential_partner
+				scope:lost_potential_partner = {
+					set_relation_lover = scope:actor
+				}
+			}
+		}
+	}
+}

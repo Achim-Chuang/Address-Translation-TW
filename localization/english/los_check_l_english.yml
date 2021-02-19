@@ -1,0 +1,6 @@
+﻿l_english:
+ losc.01.t:0 "energy status check"
+ losc.01.desc.a:0 "Your current maximum times of ejaculations per coitus is[ROOT.Var('los_cuming_times_total').GetValue|V0]\n"
+ losc.01.desc.b:0 "Basic times is[ROOT.Var('los_cuming_times_base').GetValue|V0]\n"
+ losc.01.desc.c:0 "Extra times is[ROOT.Var('los_cuming_times_extra').GetValue|V0]\n"
+ losc.01.a:0 "roger that"

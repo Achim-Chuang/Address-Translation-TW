@@ -1,0 +1,52 @@
+﻿# Opinion modifiers related to LoS interactions
+
+opinion_sex_satisfied = {
+	opinion = 10
+	months = 6
+	decaying = yes
+	stacking = yes
+	obedient = yes
+}
+
+opinion_sex_unsatisfied = {
+	opinion = -5
+	months = 2
+	decaying = yes
+}
+opinion_guilt = {
+	opinion = 60
+	years = 1
+	decaying = yes
+	stacking = yes
+	obedient = yes
+}
+opinion_treated_well = {
+	opinion = 60
+	years = 1
+	decaying = yes
+}
+opinion_very_angry = {
+	opinion = -30
+	months = 6
+	decaying = yes
+}
+opinion_be_invited = {
+	opinion = 15
+	months = 1
+	decaying = yes
+}
+opinion_be_refused_by_love = {
+	opinion = -50
+	months = 3
+	decaying = yes
+}
+opinion_take_my_wife_home = {
+	opinion = 20
+	months = 1
+	decaying = yes
+}
+opinion_take_me_home = {
+	opinion = 15
+	months = 1
+	decaying = yes
+}
