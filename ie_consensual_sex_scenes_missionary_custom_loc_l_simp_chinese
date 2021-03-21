@@ -1,0 +1,41 @@
+l_simp_chinese:
+
+ie_consensual_sex_scene.missionary.first_1_giving:0 "我撫摸著[second.Custom2('MyCharacterIntroduction', ROOT.Char )]，伸手朝向[second.GetHerHis]下背，並打開[second.GetHerHis]雙腳。"
+ie_consensual_sex_scene.missionary.first_2_giving:0 "[second.Custom2('MyCharacterIntroduction', ROOT.Char )|U]在我面前毫無保留的躺下，充滿慾望、期待著看著我。"
+ie_consensual_sex_scene.missionary.first_3_giving:0 "我朝下望向[second.GetHerHim]，在[second.GetHerHis]張開的雙腿中間，[second.GetHerHis]飢渴的[second.Custom('GetVaginaAnus')]展露無遺。"
+ie_consensual_sex_scene.missionary.first_lustful_giving:0 "我將[second.GetHerHim]拋向床上，拉下[second.GetHerHis]的衣物，我高漲的慾望毫無保留的聳立在[second.GetHerHim]面前。"
+
+ie_consensual_sex_scene.missionary.first_1_receiving:0 "[second.Custom2('MyCharacterIntroduction', ROOT.Char )|U]將我翻過去並打開我的雙腳。"
+ie_consensual_sex_scene.missionary.first_2_receiving:0 "我在[second.Custom2('MyCharacterIntroduction', ROOT.Char )]面前毫無保留的躺下，充滿慾望的向上看著[second.GetHerHim]。"
+ie_consensual_sex_scene.missionary.first_3_receiving:0 "[second.GetSheHe|U]朝下望向我，[second.GetHerHis]眼睛將我的飢渴的身體一覽無遺..."
+ie_consensual_sex_scene.missionary.first_lustful_receiving:0 "[second.GetSheHe|U]將我拋向床上，用著高聳的慾望摩擦我的私處。"
+
+ie_consensual_sex_scene.missionary.second_1_giving:0 "我用[ROOT.Char.Custom('GetPenetratingAppendage')]摩擦著[second.GetHerHis][second.Custom('GetVaginaAnus')]，挑逗著[second.GetHerHim]的慾望。"
+ie_consensual_sex_scene.missionary.second_2_giving:0 "我試著[Select_CString( ROOT.Char.IsFemale, '', '用著我的龜頭' )]探入[second.GetHerHis][Select_CString( second.IsFemale, '', '後門' )]入口處[Select_CString( second.IsFemale, '，她的淫水了浸濕我的', '')][Select_CString( second.IsFemale, ROOT.Char.Custom('GetPenetratingAppendage'), '' )]。"
+ie_consensual_sex_scene.missionary.second_3_giving:0 "用著單手，我撐開[second.GetHerHis][Select_CString( second.Char.IsFemale, '陰唇', '臀瓣' )]，然後用另一隻手套弄著$genitals_penis_name$。"
+ie_consensual_sex_scene.missionary.second_3_giving_fem:0 "用著單手，我撐開[second.GetHerHis] [Select_CString( second.Char.IsFemale, '陰唇', '臀瓣' )]，然後用另一隻手的手指撫慰著。"
+ie_consensual_sex_scene.missionary.second_4_giving:0 "我[Select_CString( ROOT.Char.IsFemale, '塞入', '導引' )]我的[ROOT.Char.Custom('GetPenetratingAppendage')]進入裡面，[second.GetFirstNameNoTooltip]在抽插的過程中[Select_CString( second.IsFemale, '低吟著', '嘶吼著' )]。"
+
+ie_consensual_sex_scene.missionary.second_1_receiving:0 "[second.GetSheHe|U]用[second.GetHerHis][second.Custom('GetPenetratingAppendage')]摩擦著我的[ROOT.Char.Custom('GetVaginaAnus')]，挑逗著我的慾望。"
+ie_consensual_sex_scene.missionary.second_2_receiving:0 "[second.GetSheHe|U]用著[second.GetHerHis]龜頭，試著探入我的 [Select_CString( ROOT.Char.IsFemale, '', '後門 ' )]入口處，讓我的顫抖沿著從脊椎蔓延而上。"
+ie_consensual_sex_scene.missionary.second_3_receiving:0 "用著單手，[second.GetSheHe]撐開我的小穴，然後用另一隻手套弄著[second.GetHerHis]$genitals_penis_name$"
+ie_consensual_sex_scene.missionary.second_3_receiving_fem:0 "用著單手，[second.GetSheHe]撐開我的小穴，然後用另一隻手的手指撫慰著。"
+ie_consensual_sex_scene.missionary.second_4_receiving:0 "[second.GetSheHe|U]塞入[second.GetHerHis][second.Custom('GetPenetratingAppendage')]進入裡面，令我不由自主地輕聲發出[Select_CString( ROOT.Char.IsFemale, '低吟聲', '嘶吼聲' )]。"
+
+ie_consensual_sex_scene.missionary.third_1_giving:0 "我開始快速抽送著[ROOT.Char.Custom('GetArmHips')]，[second.GetHerHis][second.Custom('GetVaginaAnus')]周圍的肉瓣隨著抽插的動作，不停內外翻弄著。"
+ie_consensual_sex_scene.missionary.third_2_giving:0 "我將[ROOT.Char.Custom('GetPenetratingAppendage')]塞入，進行著活塞運動，我的[ROOT.Char.Custom('GetPenetratingAppendage')]隨之沒入在[second.GetHerHim]的體內。"
+ie_consensual_sex_scene.missionary.third_3_giving:0 "很快，我的[ROOT.Char.Custom('GetArmHips')]高速律動著，讓[second.GetHerHis]的全身隨著每一下突進而顫抖著。"
+
+ie_consensual_sex_scene.missionary.third_1_receiving:0 "[second.GetSheHe|U]開始快速抽送[second.GetHerHis][second.Custom('GetArmHips')]，我的[ROOT.Char.Custom('GetVaginaAnus')]對著[second.GetHerHim]敞開，不停地被翻攪著。"
+ie_consensual_sex_scene.missionary.third_2_receiving:0 "[second.GetSheHe|U]塞入[second.GetHerHis][second.Custom('GetPenetratingAppendage')]，在我的[ROOT.Char.Custom('GetVaginaAnus')]不斷進出，我的腔洞不斷的處在被塞滿和空虛感的交錯之中..."
+ie_consensual_sex_scene.missionary.third_3_receiving:0 "很快，[second.GetSheHe]高速律動著[second.GetHerHis][second.Custom('GetArmHips')], 我的全身隨著每一下突進而顫抖著。"
+
+ie_consensual_sex_scene.missionary.escalation_1_giving:0 "我開始不斷撞擊著[second.GetHerHim]的敏感處，頻率越來越快。"
+ie_consensual_sex_scene.missionary.escalation_2_giving:0 "我越幹越快，越幹越深，空氣中充滿了激情產生的聲響。"
+ie_consensual_sex_scene.missionary.escalation_3_giving:0 "伴隨著渴望，每一次的強力的抽插都[Select_CString( second.Char.IsFemale, '引起更大的呻吟聲', '隨著低吼聲挺進' )]。"
+ie_consensual_sex_scene.missionary.escalation_4_giving:0 "我加快了節奏，越來越深入[second.GetHerHis][second.Custom('GetVaginaAnus')]."
+
+ie_consensual_sex_scene.missionary.escalation_1_receiving:0 "[second.GetSheHe|U]開始不斷撞擊著我的敏感處，頻率越來越快。"
+ie_consensual_sex_scene.missionary.escalation_2_receiving:0 "[second.GetSheHe]越幹越快，越幹越深，空氣中充滿了激情產生的聲響。"
+ie_consensual_sex_scene.missionary.escalation_3_receiving:0 "伴隨著渴望，[second.GetSheHe]每一次的強力的抽插都[Select_CString( ROOT.Char.IsFemale, '讓我呻吟', '讓我低吼' )]。"
+ie_consensual_sex_scene.missionary.escalation_4_receiving:0 "[second.GetSheHe|U]加快了節奏，越來越深入我的 [ROOT.Char.Custom('GetVaginaAnus')]."
