@@ -1,6 +1,6 @@
 ﻿l_simp_chinese:
 
- losl.01.opening:0 "致尊敬的[actor.GetTitledFirstNameNoTooltip]阁下："
+ losl.01.opening:0 "致尊敬的[actor.GetTitledFirstNameNoTooltip]閣下："
  losl.01.desc:0 "感谢您的邀请，在下不胜荣幸。期待与您的会面！"
  losl.01.a:0"仆从们，筹备宴会吧"
  
